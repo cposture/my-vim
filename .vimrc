@@ -3,7 +3,7 @@ set nocompatible
 "根据侦测到的不同类型加载对应的插件
 filetype on
 call plug#begin()
-Plug 'tpope/vim-sensible'
+Plug '~/vim-plugin/ericcurtin/CurtineIncSw.vim'
 call plug#end()
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()

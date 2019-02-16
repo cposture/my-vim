@@ -1,0 +1,6 @@
+[submodule "vim-plugin/rdnetto/YCM-Generator"]
+	path = vim-plugin/rdnetto/YCM-Generator
+	url = https://github.com/rdnetto/YCM-Generator
+[submodule "vim-plugin/ericcurtin/CurtineIncSw.vim"]
+	path = vim-plugin/ericcurtin/CurtineIncSw.vim
+	url = https://github.com/ericcurtin/CurtineIncSw.vim
