@@ -28,16 +28,21 @@ call plug#end()
 "############################################### end vim-plug ##################################
 
 "############################################### begin common-conf #############################
-"设置切换Buffer快捷键"
-nnoremap <C-N> :bn<CR>
-nnoremap <C-P> :bp<CR>
-map <S-Left> :tabp<CR>
-map <S-Right> :tabn<CR>
+"=========================================
+" 键盘配置
+"=========================================
+" CTRL + LEFT 打开 buffer 文件列表下个文件
+nnoremap <C-LEFT> :bn<CR>
+" CTRL + RIGHT 打开 buffer 文件列表上个文件
+nnoremap <C-RIGHT> :bp<CR>
+" CTRL + N 打开下一个 tab
+nnoremap <C-N> :tabn<CR>
+" CTRL + P 打开上一个 tab
+nnoremap <C-P> :tabp<CR>
 "去空行  
-nnoremap <F2> :g/^\s*$/d<CR> 
-map <F12> gg=G
+"nnoremap <F2> :g/^\s*$/d<CR> 
+"map <F12> gg=G
 "############################################### end common-conf ###############################
-
 
 "############################################### begin 所有插件配置 #############################
 "=========================================
