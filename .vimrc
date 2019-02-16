@@ -2,9 +2,14 @@
 set nocompatible
 "根据侦测到的不同类型加载对应的插件
 filetype on
+
 call plug#begin()
+"头文件源文件来回切换插件
 Plug '~/vim-plugin/ericcurtin/CurtineIncSw.vim'
+"YouCompleteMe 辅助插件，生成项目 .ycm_extra_conf.py 文件
+Plug '~/vim-plugin/rdnetto/YCM-Generator'
 call plug#end()
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'file:///data/luffichen/vim-plugin/VundleVim/Vundle.vim'
@@ -42,9 +47,9 @@ Plugin 'file:///data/luffichen/vim-plugin/vim-clang-format'
 Plugin 'file:///data/luffichen/vim-plugin/vim-matchit'
 Plugin 'file:///data/luffichen/vim-plugin/indentpython.vim'
 "头文件源文件来回切换插件
-Plugin 'file:///data/luffichen/vim-plugin/CurtineIncSw.vim'
+"Plugin 'file:///data/luffichen/vim-plugin/CurtineIncSw.vim'
 "YouCompleteMe 辅助插件，生成项目 .ycm_extra_conf.py 文件
-Plugin 'file:///data/luffichen/vim-plugin/rdnetto/YCM-Generator'
+"Plugin 'file:///data/luffichen/vim-plugin/rdnetto/YCM-Generator'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
