@@ -4,3 +4,15 @@
 [submodule "vim-plugin/ericcurtin/CurtineIncSw.vim"]
 	path = vim-plugin/ericcurtin/CurtineIncSw.vim
 	url = https://github.com/ericcurtin/CurtineIncSw.vim
+[submodule "vim-plugin/tomasr/molokai"]
+	path = vim-plugin/tomasr/molokai
+	url = https://github.com/tomasr/molokai
+[submodule "vim-plugin/majutsushi/tagbar"]
+	path = vim-plugin/majutsushi/tagbar
+	url = https://github.com/majutsushi/tagbar
+[submodule "vim-plugin/jiangmiao/auto-pairs"]
+	path = vim-plugin/jiangmiao/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs
+[submodule "vim-plugin/vim-airline/vim-airline"]
+	path = vim-plugin/vim-airline/vim-airline
+	url = https://github.com/vim-airline/vim-airline

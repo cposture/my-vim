@@ -1,56 +1,93 @@
-"Vundle配置
 set nocompatible
 "根据侦测到的不同类型加载对应的插件
-filetype on
+filetype off
 
+"############################################### begin vim-plug ################################
 call plug#begin()
-"头文件源文件来回切换插件
+"CurtineIncSw.vim 插件，用于头文件源文件来回切换
 Plug '~/vim-plugin/ericcurtin/CurtineIncSw.vim'
+"YouCompleteMe 插件，用于补全和提示
+Plug '~/vim-plugin/YouCompleteMe'
 "YouCompleteMe 辅助插件，生成项目 .ycm_extra_conf.py 文件
 Plug '~/vim-plugin/rdnetto/YCM-Generator'
+"Molokai 主题
+Plug '~/vim-plugin/tomasr/molokai'
+"类/方法/变量相关侧边栏
+Plug '~/vim-plugin/majutsushi/tagbar'
+"自动补全括号插件
+Plug '~/vim-plugin/jiangmiao/auto-pairs'
+"状态栏
+Plug '~/vim-plugin/vim-airline/vim-airline'
 call plug#end()
+"############################################### end vim-plug ##################################
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'file:///data/luffichen/vim-plugin/VundleVim/Vundle.vim'
-Plugin 'YouCompleteMe'
-Plugin 'file:///data/luffichen/vim-plugin/neco-vim'
-Plugin 'file:///data/luffichen/vim-plugin/tagbar'
-Plugin 'file:///data/luffichen/vim-plugin/auto-pairs'
-Plugin 'file:///data/luffichen/vim-plugin/vim-airline'
-Plugin 'file:///data/luffichen/vim-plugin/c.vim'
-Plugin 'file:///data/luffichen/vim-plugin/vim-css3-syntax'
-Plugin 'file:///data/luffichen/vim-plugin/vim-coloresque'
-Plugin 'file:///data/luffichen/vim-plugin/emmet-vim'
-Plugin 'file:///data/luffichen/vim-plugin/vim-polyglot'
-Plugin 'file:///data/luffichen/vim-plugin/vim-javascript'
-Plugin 'file:///data/luffichen/vim-plugin/indentLine'
-Plugin 'file:///data/luffichen/vim-plugin/vim-jsbeautify'
-Plugin 'file:///data/luffichen/vim-plugin/html5.vim'
-Plugin 'file:///data/luffichen/vim-plugin/javascript-libraries-syntax.vim'
-Plugin 'file:///data/luffichen/vim-plugin/nerdtree'
-Plugin 'file:///data/luffichen/vim-plugin/syntastic'
-Plugin 'file:///data/luffichen/vim-plugin/neocomplete.vim'
-Plugin 'file:///data/luffichen/vim-plugin/neosnippet.vim'
-Plugin 'file:///data/luffichen/vim-plugin/neosnippet-snippets'
-Plugin 'file:///data/luffichen/vim-plugin/supertab'
-Plugin 'file:///data/luffichen/vim-plugin/molokai'
-Plugin 'file:///data/luffichen/vim-plugin/vim-pug'
-Plugin 'file:///data/luffichen/vim-plugin/vim-pug-complete'
-Plugin 'file:///data/luffichen/vim-plugin/vim-jquery'
-Plugin 'file:///data/luffichen/vim-plugin/vim-vue'
-Plugin 'file:///data/luffichen/vim-plugin/vim-nodejs-complete'
-Plugin 'file:///data/luffichen/vim-plugin/vim-jsdoc'
-Plugin 'file:///data/luffichen/vim-plugin/vim-es6'
-Plugin 'file:///data/luffichen/vim-plugin/vim-json'
-Plugin 'file:///data/luffichen/vim-plugin/vim-clang-format'
-Plugin 'file:///data/luffichen/vim-plugin/vim-matchit'
-Plugin 'file:///data/luffichen/vim-plugin/indentpython.vim'
-"头文件源文件来回切换插件
-"Plugin 'file:///data/luffichen/vim-plugin/CurtineIncSw.vim'
-"YouCompleteMe 辅助插件，生成项目 .ycm_extra_conf.py 文件
-"Plugin 'file:///data/luffichen/vim-plugin/rdnetto/YCM-Generator'
-call vundle#end()            " required
+"############################################### begin 所有插件配置 #############################
+"=========================================
+" CurtineIncSw.vim 插件配置
+"=========================================
+"CTRL + R 头文件源文件来回切换
+map <C-R> :call CurtineIncSw()<CR>
+
+"=========================================
+" YouCompleteMe 插件配置
+"=========================================
+".ycm_extra_conf.py 文件路径
+let g:ycm_global_ycm_extra_conf = '/data/luffichen/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+"是否开启语义补全
+let g:ycm_seed_identifiers_with_syntax=1
+"打开vim时不再询问是否加载.ycm_extra_conf.py配置
+let g:ycm_confirm_extra_conf=0
+"提示框展示
+set completeopt=longest,menu
+"跳转快捷键
+" space + j + c 跳转到声明处
+nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
+"space + j + f 跳转到定义处
+nnoremap <leader>jf :YcmCompleter GoToDefinition<CR>
+"space + j + j 跳转到声明或定义处
+nnoremap <leader>jj :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"YCM将使用此选项的值作为Vim装订线中错误的符号
+let g:ycm_error_symbol = '>>'
+"YCM将使用此选项的值作为Vim装订线中警告的符号
+let g:ycm_warning_symbol = '>*'
+"回车即选中当前项"
+inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
+let g:ycm_autoclose_preview_window_after_completion = 0
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<ESC>a" : "\<CR>"
+"CurtineIncSw.vim 插件
+map <C-R> :call CurtineIncSw()<CR>
+
+"=========================================
+" YCM-Generator 插件配置
+"=========================================
+" ctrl-I 自动生成 .ycm_extra_conf.py 文件
+map <C-I> :YcmGenerateConfig -c g++ -v -x c++ -m /usr/bin/make -f -b make .<CR>
+
+"=========================================
+" molokai 插件配置
+"=========================================
+"设置背景主题
+color molokai
+
+"=========================================
+" tagbar 插件配置
+"=========================================
+" F9 展示类/方法/变量相关侧边栏
+nmap <F9> :TagbarToggle<CR>
+"启动时自动focus
+let g:tagbar_autofocus = 1
+
+"=========================================
+" auto-pairs 插件配置
+"=========================================
+
+"=========================================
+" vim-airline 插件配置
+"=========================================
+
+
+"############################################### end 所有插件配置 ###############################
+
 filetype plugin indent on    " required
 
 if has("gui_running")
