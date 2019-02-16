@@ -16,3 +16,9 @@
 [submodule "vim-plugin/vim-airline/vim-airline"]
 	path = vim-plugin/vim-airline/vim-airline
 	url = https://github.com/vim-airline/vim-airline
+[submodule "vim-plugin/sheerun/vim-polyglot"]
+	path = vim-plugin/sheerun/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot
+[submodule "vim-plugin/Yggdroot/indentLine"]
+	path = vim-plugin/Yggdroot/indentLine
+	url = https://github.com/Yggdroot/indentLine

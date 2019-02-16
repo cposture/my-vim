@@ -12,14 +12,26 @@ Plug '~/vim-plugin/YouCompleteMe'
 Plug '~/vim-plugin/rdnetto/YCM-Generator'
 "Molokai 主题
 Plug '~/vim-plugin/tomasr/molokai'
-"类/方法/变量相关侧边栏
+"类/方法/变量相关侧边栏，依赖 ctags
 Plug '~/vim-plugin/majutsushi/tagbar'
 "自动补全括号插件
 Plug '~/vim-plugin/jiangmiao/auto-pairs'
 "状态栏
 Plug '~/vim-plugin/vim-airline/vim-airline'
+"开箱即用型的语法高亮包，支持大部分前端后台语言
+Plug '~/vim-plugin/sheerun/vim-polyglot'
+"缩进线，方便 python 语言对齐
+Plug '~/vim-plugin/Yggdroot/indentLine'
 call plug#end()
 "############################################### end vim-plug ##################################
+
+"############################################### begin common-conf #############################
+"设置切换Buffer快捷键"
+nnoremap <C-N> :bn<CR>
+nnoremap <C-P> :bp<CR>
+
+"############################################### end common-conf ###############################
+
 
 "############################################### begin 所有插件配置 #############################
 "=========================================
@@ -70,7 +82,7 @@ map <C-I> :YcmGenerateConfig -c g++ -v -x c++ -m /usr/bin/make -f -b make .<CR>
 color molokai
 
 "=========================================
-" tagbar 插件配置
+" tagbar 插件配置，依赖 ctags
 "=========================================
 " F9 展示类/方法/变量相关侧边栏
 nmap <F9> :TagbarToggle<CR>
@@ -84,6 +96,17 @@ let g:tagbar_autofocus = 1
 "=========================================
 " vim-airline 插件配置
 "=========================================
+"当只打开一个选项卡时自动显示所有缓冲区
+let g:airline#extensions#tabline#enabled = 1
+
+"=========================================
+" vim-polyglot 插件配置
+"=========================================
+
+"=========================================
+" indentLine 插件配置
+"=========================================
+
 
 
 "############################################### end 所有插件配置 ###############################
