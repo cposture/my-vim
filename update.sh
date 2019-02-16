@@ -1,3 +1,3 @@
 #!/bin/bash
 git submodule update --init --recursive
-cp -r .vim .vimrc ~/
+yes|cp -r .vim .vimrc vim-plugin ~/
