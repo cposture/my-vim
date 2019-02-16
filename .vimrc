@@ -22,6 +22,8 @@ Plug '~/vim-plugin/vim-airline/vim-airline'
 Plug '~/vim-plugin/sheerun/vim-polyglot'
 "缩进线，方便 python 语言对齐
 Plug '~/vim-plugin/Yggdroot/indentLine'
+"树形目录插件
+Plug '~/vim-plugin/scrooloose/nerdtree'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -29,7 +31,11 @@ call plug#end()
 "设置切换Buffer快捷键"
 nnoremap <C-N> :bn<CR>
 nnoremap <C-P> :bp<CR>
-
+map <S-Left> :tabp<CR>
+map <S-Right> :tabn<CR>
+"去空行  
+nnoremap <F2> :g/^\s*$/d<CR> 
+map <F12> gg=G
 "############################################### end common-conf ###############################
 
 
@@ -66,7 +72,11 @@ let g:ycm_warning_symbol = '>*'
 inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
 let g:ycm_autoclose_preview_window_after_completion = 0
 inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<ESC>a" : "\<CR>"
-"CurtineIncSw.vim 插件
+
+"=========================================
+" CurtineIncSw.vim 插件配置
+"=========================================
+" CTRL-R头文件源文件来回切换
 map <C-R> :call CurtineIncSw()<CR>
 
 "=========================================
@@ -108,6 +118,15 @@ let g:airline#extensions#tabline#enabled = 1
 "=========================================
 "打开缩进线
 let g:indentLine_enabled = 1
+
+"=========================================
+" indentLine 插件配置
+"=========================================
+"打开树形目录
+map <F3> :NERDTreeToggle<CR>
+imap <F3> <ESC> :NERDTreeToggle<CR>
+"只剩 NERDTree 时自动关闭
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "############################################### end 所有插件配置 ###############################
 
@@ -209,22 +228,11 @@ au BufRead,BufNewFile *.{htm}   set filetype=html
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "键盘命令
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <S-Left> :tabp<CR>
-map <S-Right> :tabn<CR>
-"打开airline智能tab
-let g:airline#extensions#tabline#enabled = 1
-"set clipboard=unnamed
-"去空行  
-nnoremap <F2> :g/^\s*$/d<CR> 
-map <F12> gg=G
+
 
 "html标签自动补全
 map! <C-O> <C-Y>,
-"列出当前目录文件  
-map <F3> :NERDTreeToggle<CR>
-imap <F3> <ESC> :NERDTreeToggle<CR>
-"tagbar
-nmap <F9> :TagbarToggle<CR>
+
 "C，C++ 按F5编译运行
 map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
@@ -430,35 +438,3 @@ let g:javascript_plugin_jsdoc = 1
 
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
-
-"YCM
-".ycm_extra_conf.py 文件路径
-let g:ycm_global_ycm_extra_conf = '/data/luffichen/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-"是否开启语义补全
-let g:ycm_seed_identifiers_with_syntax=1
-"打开vim时不再询问是否加载.ycm_extra_conf.py配置
-let g:ycm_confirm_extra_conf=0
-"提示框展示
-set completeopt=longest,menu
-"跳转快捷键
-" space + j + c 跳转到声明处
-nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
-"space + j + f 跳转到定义处
-nnoremap <leader>jf :YcmCompleter GoToDefinition<CR>
-"space + j + j 跳转到声明或定义处
-nnoremap <leader>jj :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"YCM将使用此选项的值作为Vim装订线中错误的符号
-let g:ycm_error_symbol = '>>'
-"YCM将使用此选项的值作为Vim装订线中警告的符号
-let g:ycm_warning_symbol = '>*'
-"回车即选中当前项"
-inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
-let g:ycm_autoclose_preview_window_after_completion = 0
-inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<ESC>a" : "\<CR>"
-"CurtineIncSw.vim 插件
-map <C-R> :call CurtineIncSw()<CR>
-
-"YCM-Generator 插件
-" ctrl-I 自动生成 .ycm_extra_conf.py 文件
-map <C-I> :YcmGenerateConfig -c g++ -v -x c++ -m /usr/bin/make -f -b make .<CR>
-

@@ -22,3 +22,6 @@
 [submodule "vim-plugin/Yggdroot/indentLine"]
 	path = vim-plugin/Yggdroot/indentLine
 	url = https://github.com/Yggdroot/indentLine
+[submodule "vim-plugin/scrooloose/nerdtree"]
+	path = vim-plugin/scrooloose/nerdtree
+	url = https://github.com/scrooloose/nerdtree
