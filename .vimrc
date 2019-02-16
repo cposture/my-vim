@@ -24,6 +24,13 @@ Plug '~/vim-plugin/sheerun/vim-polyglot'
 Plug '~/vim-plugin/Yggdroot/indentLine'
 "树形目录插件
 Plug '~/vim-plugin/scrooloose/nerdtree'
+"语法检查
+Plug '~/vim-plugin/vim-syntastic/syntastic'
+"C/C++,js,ts,oc,java,protobuf 格式插件，依赖 vim-operator-user 插件和 clang-format 3.4+
+Plug '~/vim-plugin/rhysd/vim-clang-format'
+"vim-clang-format 依赖
+Plug '~/vim-plugin/kana/vim-operator-user'
+
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -133,6 +140,29 @@ imap <F3> <ESC> :NERDTreeToggle<CR>
 "只剩 NERDTree 时自动关闭
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+"=========================================
+" syntastic 插件配置
+"=========================================
+"检查语法错误
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"=========================================
+" vim-clang-format 插件配置
+"=========================================
+" F4 格式化代码
+nmap <F4> :ClangFormat<CR>
+"自动启用自动格式化
+autocmd FileType c,cpp ClangFormatAutoEnable
+"自动检测样式文件，.clang-format 或者 _clang-format 将样式应用于格式
+let g:clang_format#detect_style_file = 1
+
 "############################################### end 所有插件配置 ###############################
 
 filetype plugin indent on    " required
@@ -160,17 +190,6 @@ set selection=inclusive
 set wildmenu
 set mousemodel=popup
 set t_Co=256 "256位色"
-
-"syntastic相关
-"检查语法错误
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
