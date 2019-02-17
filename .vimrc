@@ -394,5 +394,5 @@ let g:SuperTabDefaultCompletionType="<C-X><C-O>"
 "=========================================
 " FlyGrep 插件配置
 "=========================================
-nnoremap <Space>s/ :FlyGrep p<CR>
+nnoremap <Space>s/ :FlyGrep<CR>
 "############################################### end 所有插件配置 ###############################
