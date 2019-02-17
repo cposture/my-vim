@@ -35,6 +35,8 @@ Plug '~/vim-plugin/tmhedberg/SimpylFold'
 Plug '~/vim-plugin/yianwillis/vimcdoc'
 "自动补全记忆插件
 Plug '~/vim-plugin/ervandew/supertab'
+"异步实时代码检索
+Plug '~/vim-plugin/wsdjeg/FlyGrep.vim'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -388,4 +390,9 @@ let g:SimpylFold_docstring_preview = 1
 let g:SuperTabRetainCompletionType = 2
 "把omni补全设置成tab键
 let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+
+"=========================================
+" FlyGrep 插件配置
+"=========================================
+nnoremap <Space>s/ :FlyGrep p<CR>
 "############################################### end 所有插件配置 ###############################
