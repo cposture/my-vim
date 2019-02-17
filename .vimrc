@@ -58,59 +58,6 @@ nnoremap <C-N> :tabn<CR>
 nnoremap <C-P> :tabp<CR>
 "tags 跳转，ctrl+左键跳转
 nnoremap <C-LeftMouse> <C-]><CR>
-"C，C++ 按F5编译运行
-map <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-    exec "w"
-    if &filetype == 'c'
-        exec "!gcc % -o %<"
-        exec "!time ./%<"
-    elseif &filetype == 'cpp'
-        exec "!g++ % -o %<"
-        exec "!time ./%<"
-    elseif &filetype == 'java' 
-        exec "!javac %" 
-        exec "!time java %<"
-    elseif &filetype == 'cs'
-        exec "!mcs %"
-        exec "!time mono %<.exe"
-    elseif &filetype == 'python'
-        exec "!python3 %"
-    endif
-endfunc
-"C,C++的调试
-map <F8> :call Rungdb()<CR>
-func! Rungdb()
-    exec "w"
-    exec "!g++ % -g -o %<"
-    exec "!gdb ./%<"
-endfunc
-"代码格式优化化
-map <F6> :call FormartSrc()<CR><CR>
-"定义FormartSrc()
-func FormartSrc()
-    exec "w"
-    if &filetype == 'c'
-        exec "!astyle --style=ansi -a --suffix=none %"
-    elseif &filetype == 'cpp' || &filetype == 'hpp'
-        exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
-    elseif &filetype == 'perl'
-        exec "!astyle --style=gnu --suffix=none %"
-    elseif &filetype == 'py'||&filetype == 'python'
-        exec "r !autopep8 -i --aggressive %"
-    elseif &filetype == 'java'
-        exec "!astyle --style=java --suffix=none %"
-    elseif &filetype == 'jsp'
-        exec "!astyle --style=gnu --suffix=none %"
-    elseif &filetype == 'xml'
-        exec "!astyle --style=gnu --suffix=none %"
-    else
-        exec "normal gg=G"
-        return
-    endif
-    exec "e! %"
-endfunc
-"结束定义FormartSrc
 
 "=========================================
 " 语言配置
@@ -214,6 +161,8 @@ set history=1000
 set showcmd
 "光标移动到buffer的顶部和底部时保持3行距离
 set scrolloff=3
+"光标移动的距离
+set scroll=1
 "高亮显示匹配的括号
 set showmatch
 "匹配括号高亮的时间（单位是十分之一秒）
