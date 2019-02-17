@@ -1,7 +1,6 @@
 set nocompatible
-"根据侦测到的不同类型加载对应的插件
-filetype off
-
+"保存全局变量
+set viminfo+=!
 "############################################### begin vim-plug ################################
 call plug#begin()
 "CurtineIncSw.vim 插件，用于头文件源文件来回切换
@@ -34,7 +33,6 @@ Plug '~/vim-plugin/vim-scripts/indentpython.vim'
 Plug '~/vim-plugin/tmhedberg/SimpylFold'
 " vim 中文版文档
 Plug '~/vim-plugin/yianwillis/vimcdoc'
-
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -44,6 +42,8 @@ call plug#end()
 "=========================================
 "设置快捷键的前缀
 let mapleader = "<Space>"
+"可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+set mouse=a
 " CTRL + LEFT 打开 buffer 文件列表下个文件
 nnoremap <C-LEFT> :bn<CR>
 " CTRL + RIGHT 打开 buffer 文件列表上个文件
@@ -52,10 +52,69 @@ nnoremap <C-RIGHT> :bp<CR>
 nnoremap <C-N> :tabn<CR>
 " CTRL + P 打开上一个 tab
 nnoremap <C-P> :tabp<CR>
+"tags 跳转，ctrl+左键跳转
+nnoremap <C-LeftMouse> <C-]><CR>
+"C，C++ 按F5编译运行
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!gcc % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'java' 
+        exec "!javac %" 
+        exec "!time java %<"
+    elseif &filetype == 'cs'
+        exec "!mcs %"
+        exec "!time mono %<.exe"
+    elseif &filetype == 'python'
+        exec "!python3 %"
+    endif
+endfunc
+"C,C++的调试
+map <F8> :call Rungdb()<CR>
+func! Rungdb()
+    exec "w"
+    exec "!g++ % -g -o %<"
+    exec "!gdb ./%<"
+endfunc
+"代码格式优化化
+map <F6> :call FormartSrc()<CR><CR>
+"定义FormartSrc()
+func FormartSrc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!astyle --style=ansi -a --suffix=none %"
+    elseif &filetype == 'cpp' || &filetype == 'hpp'
+        exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
+    elseif &filetype == 'perl'
+        exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == 'py'||&filetype == 'python'
+        exec "r !autopep8 -i --aggressive %"
+    elseif &filetype == 'java'
+        exec "!astyle --style=java --suffix=none %"
+    elseif &filetype == 'jsp'
+        exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == 'xml'
+        exec "!astyle --style=gnu --suffix=none %"
+    else
+        exec "normal gg=G"
+        return
+    endif
+    exec "e! %"
+endfunc
+"结束定义FormartSrc
 
 "=========================================
 " 语言配置
 "=========================================
+"编码
+set termencoding=utf-8
+set encoding=utf8
+set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 " python tab 长度为 4
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 " 开启文件类型检查，这将触发FileType事件，该事件可用于设置语法突出显示，设置选项等
@@ -72,6 +131,8 @@ set shiftwidth=4
 set tabstop=4
 "方便在开启了et后使用退格（backspace）键，每次退格将删除X个空格
 set softtabstop=4
+" 使回格键（backspace）正常处理indent(缩进位置), eol(行结束符), start(段首), 很奇怪 Vim 默认竟然不允许在这些地方使用 backspace
+set backspace=indent,eol,start
 "开启时，在行首按TAB将加入 shiftwidth 个空格，否则加入 tabstop 个空格
 set smarttab
 "设置光标超过 78 列的时候折行
@@ -91,7 +152,28 @@ set sm
 "set smartindent
 "缩进方式，用C语言的缩进格式来处理程序的缩进结构
 set cindent
-
+"设置当文件被改动时自动载入
+set autoread
+"当你编辑下一个文件的时候，目前正在编辑的文件如果改动，将会自动保存
+set autowrite
+"tags 配置
+set tags=tags;
+"输出时只有文件名，不带./ ../等目录前缀(默认了执行％在当前的目录下)
+set autochdir 
+"禁止生成临时文件
+set noundofile
+set nobackup
+set noswapfile
+"搜索忽略大小写
+set ignorecase
+augroup file_type
+    autocmd!
+    "为特定后缀的文件设置文件类型
+    autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
+    autocmd BufRead,BufNewFile *.{go}   set filetype=go
+    autocmd BufRead,BufNewFile *.{js}   set filetype=javascript
+    autocmd BufRead,BufNewFile *.{htm}   set filetype=html
+augroup END
 "=========================================
 " 显示配置
 "=========================================
@@ -110,7 +192,9 @@ syntax on
 set wildmenu
 "指定在选择文本时，光标所在位置也属于被选中的范围。如果指定 selection=exclusive 的话，可能会出现某些文本无法被选中的情况
 set selection=inclusive
-"当右键单击窗口的时候，弹出快捷菜单
+"选择字符，使用鼠标时或 shift+特殊键时进入选择模式
+set selectmode=mouse,key
+"当右键单击窗口的时候，弹出快捷菜单, GUI
 set mousemodel=popup
 "256位色
 set t_Co=256
@@ -126,12 +210,63 @@ set history=1000
 set showcmd
 "光标移动到buffer的顶部和底部时保持3行距离
 set scrolloff=3
+"高亮显示匹配的括号
+set showmatch
+"匹配括号高亮的时间（单位是十分之一秒）
+set matchtime=1
 "显示状态栏
 set laststatus=2
 "突出显示当前行
 set cursorline
 "设置魔术
 set magic
+"打开搜索高亮模式，若搜索找到匹配项就高亮显示所有匹配项
+set hlsearch
+"打开增量搜索模式，Vim 会即时匹配你当前输入的内容，这样会给你更好的搜索反馈
+set incsearch
+"语言设置
+set langmenu=zh_CN.UTF-8
+"如果有，就使用vim 中文帮助文档
+set helplang=cn
+"设置命令行的高度
+set cmdheight=1
+"menu:匹配多于一个使用弹框显示补全，longest:不懂
+set completeopt=longest,menu
+"在处理未保存或只读文件的时候，弹出确认
+set confirm
+"使用 :commands 命令模式时总是报告修改的行数
+set report=0
+" 在被分割的窗口间显示空白，便于阅读
+set fillchars=vert:\ ,stl:\ ,stlnc:\ 
+augroup vimrcEx
+    "当打开一个文件，跳到上次光标所在位置
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \   exe "normal g`\"" |
+                \ endif
+    "只剩 NERDTree时自动关闭
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+    " quickfix 模式
+    autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
+augroup END
+
+"=========================================
+" vim omnicompletion 配置
+"=========================================
+"OmniCppComplete 是根据 Ctags 生成的索引文件进行补全
+"开启各种语言的补全
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+autocmd FileType python set omnifunc=python3complete#Complete
+autocmd FileType JavaScript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+"把omni补全设置成tab键
+let g:SuperTabDefaultCompletionType="<C-X><C-O>" 
 "############################################### end common-conf ###############################
 
 "############################################### begin 所有插件配置 #############################
@@ -245,258 +380,3 @@ let g:syntastic_check_on_wq = 0
 "=========================================
 "在折叠文本中预览 python docstring
 let g:SimpylFold_docstring_preview = 1
-
-"############################################### end 所有插件配置 ###############################
-
-
-
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 显示相关  
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-set guifont=Monaco:h10:b
-
-
-"set foldenable      " 允许折叠  
-"set foldmethod=manual   " 手动折叠  
-
-
-
-"打开搜索高亮模式，若搜索找到匹配项就高亮显示所有匹配项
-set hlsearch
-"打开增量搜索模式，Vim 会即时匹配你当前输入的内容，这样会给你更好的搜索反馈
-set incsearch
-"语言设置
-set langmenu=zh_CN.UTF-8
-set helplang=cn
-" 总是显示状态行
-set cmdheight=1
-
-" 保存全局变量
-set viminfo+=!
-
-
-" 字符间插入的像素行数目
-"markdown配置
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
-au BufRead,BufNewFile *.{go}   set filetype=go
-au BufRead,BufNewFile *.{js}   set filetype=javascript
-au BufRead,BufNewFile *.{htm}   set filetype=html
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"键盘命令
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-"html标签自动补全
-map! <C-O> <C-Y>,
-
-"C，C++ 按F5编译运行
-map <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-    exec "w"
-    if &filetype == 'c'
-        exec "!gcc % -o %<"
-        exec "!time ./%<"
-    elseif &filetype == 'cpp'
-        exec "!g++ % -o %<"
-        exec "!time ./%<"
-    elseif &filetype == 'java' 
-        exec "!javac %" 
-        exec "!time java %<"
-    elseif &filetype == 'cs'
-        exec "!mcs %"
-        exec "!time mono %<.exe"
-    elseif &filetype == 'python'
-        exec "!python3 %"
-    endif
-endfunc
-"C,C++的调试
-map <F8> :call Rungdb()<CR>
-func! Rungdb()
-    exec "w"
-    exec "!g++ % -g -o %<"
-    exec "!gdb ./%<"
-endfunc
-"代码格式优化化
-map <F6> :call FormartSrc()<CR><CR>
-"定义FormartSrc()
-func FormartSrc()
-    exec "w"
-    if &filetype == 'c'
-        exec "!astyle --style=ansi -a --suffix=none %"
-    elseif &filetype == 'cpp' || &filetype == 'hpp'
-        exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
-    elseif &filetype == 'perl'
-        exec "!astyle --style=gnu --suffix=none %"
-    elseif &filetype == 'py'||&filetype == 'python'
-        exec "r !autopep8 -i --aggressive %"
-    elseif &filetype == 'java'
-        exec "!astyle --style=java --suffix=none %"
-    elseif &filetype == 'jsp'
-        exec "!astyle --style=gnu --suffix=none %"
-    elseif &filetype == 'xml'
-        exec "!astyle --style=gnu --suffix=none %"
-    else
-        exec "normal gg=G"
-        return
-    endif
-    exec "e! %"
-endfunc
-"结束定义FormartSrc
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""实用设置
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("autocmd")
-    autocmd BufReadPost *
-                \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                \   exe "normal g`\"" |
-                \ endif
-endif
-" 只剩 NERDTree时自动关闭
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-" 设置当文件被改动时自动载入
-set autoread
-" quickfix模式
-autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
-"代码补全 
-set completeopt=preview,menu 
-"自动保存
-set autowrite
-" 去掉输入错误的提示声音
-"set noeb
-" 在处理未保存或只读文件的时候，弹出确认
-set confirm
-"禁止生成临时文件
-set noundofile
-set nobackup
-set noswapfile
-"搜索忽略大小写
-set ignorecase
-set linespace=0
-" 增强模式中的命令行自动完成操作
-set wildmenu
-" 使回格键（backspace）正常处理indent, eol, start等
-set backspace=2
-" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
-set mouse=a
-set selection=exclusive
-set selectmode=mouse,key
-" 通过使用: commands命令，告诉我们文件的哪一行被改变过
-set report=0
-" 在被分割的窗口间显示空白，便于阅读
-set fillchars=vert:\ ,stl:\ ,stlnc:\ 
-
-" 高亮显示匹配的括号
-set showmatch
-" 匹配括号高亮的时间（单位是十分之一秒）
-set matchtime=1
-" 光标移动到buffer的顶部和底部时保持3行距离
-set scrolloff=3
-
-filetype plugin indent on 
-"打开文件类型检测, 加了这句才可以用智能补全
-set completeopt=longest,menu
-set tags=tags;
-set autochdir "输出时只有文件名，不带./ ../等目录前缀(默认了执行％在当前的目录下)
-set termencoding=utf-8
-set encoding=utf8
-set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
-"tags 跳转，ctrl+左键跳转
-nnoremap <C-LeftMouse> <C-]><CR>
-
-"javacomplete2配置
-augroup filetype java
-    "F4自动补全倒入缺失包｀
-    autocmd FileType java nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-    autocmd FileType java imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-    "To enable usual (will ask for import option) inserting class imports with F5, add:
-    "nmap <F5> <Plug>(JavaComplete-Imports-Add)
-    "imap <F5> <Plug>(JavaComplete-Imports-Add)
-    "To add all missing imports with F6:
-    "nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-    "imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-    "To remove all missing imports with F7:
-    "nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-    "imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-    "Default mapping for accessors generation:
-    nmap <buffer> <leader>jA <Plug>(JavaComplete-Generate-Accessors)
-    nmap <buffer> <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
-    nmap <buffer> <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
-    nmap <buffer> <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-    "imap <buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
-    "imap <buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
-    "imap <buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-augroup end
-
-
-"关于neocomplete，需要安装lua---------------------------------------------------------------------
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-" AutoComplPop like behavior.
-let g:neocomplete#enable_auto_select = 1
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:]*\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:]*\t]\%(\.\|->\)\|\h\w*::'
-
-" Enable omni completion.
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
-autocmd FileType python set omnifunc=python3complete#Complete
-autocmd FileType JavaScript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-
-"把omni补全设置成tab键
-"let g:SuperTabDefaultCompletionType="<C-X><C-O>" 
-
-
-augroup VimCSS3Syntax
-    autocmd!
-    autocmd FileType css setlocal iskeyword+=-
-augroup END
-let g:cssColorVimDoNotMessMyUpdatetime = 1
-
-let g:nodejs_complete_config = {
-            \'js_compl_fn': 'javascriptcomplete#CompleteJS',
-            \'max_node_compl_len': 15
-            \}
-"javascript html5 API补全插件
-let g:jscomplete_use = ['dom', 'html5API', 'webGL']
-let g:jscomplete_webgl_ns = 'webgl'
-let g:javascript_plugin_jsdoc = 1
-
-"augroup javascript_folding
-"    au!
-"    au FileType javascript setlocal foldmethod=syntax
-"augroup END
-
-let g:better_whitespace_enabled=1
-let g:strip_whitespace_on_save=1
