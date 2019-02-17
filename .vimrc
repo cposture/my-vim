@@ -56,8 +56,8 @@ nnoremap <C-RIGHT> :bp<CR>
 nnoremap <C-N> :tabn<CR>
 " CTRL + P 打开上一个 tab
 nnoremap <C-P> :tabp<CR>
-"tags 跳转，ctrl+左键跳转
-nnoremap <C-LeftMouse> <C-]><CR>
+"tags 跳转，ctrl+左键跳转，且当前行移动到屏幕的顶部
+nnoremap <C-LeftMouse> <C-]>zt<CR>
 
 "=========================================
 " 语言配置
