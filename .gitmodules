@@ -43,3 +43,6 @@
 [submodule "vim-plugin/tmhedberg/SimpylFold"]
 	path = vim-plugin/tmhedberg/SimpylFold
 	url = https://github.com/tmhedberg/SimpylFold
+[submodule "vim-plugin/yianwillis/vimcdoc"]
+	path = vim-plugin/yianwillis/vimcdoc
+	url = https://github.com/yianwillis/vimcdoc

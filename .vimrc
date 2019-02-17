@@ -32,6 +32,9 @@ Plug '~/vim-plugin/andymass/vim-matchup'
 Plug '~/vim-plugin/vim-scripts/indentpython.vim'
 "python 折叠
 Plug '~/vim-plugin/tmhedberg/SimpylFold'
+" vim 中文版文档
+Plug '~/vim-plugin/yianwillis/vimcdoc'
+
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -39,6 +42,8 @@ call plug#end()
 "=========================================
 " 键盘配置
 "=========================================
+"设置快捷键的前缀
+let mapleader = "<Space>"
 " CTRL + LEFT 打开 buffer 文件列表下个文件
 nnoremap <C-LEFT> :bn<CR>
 " CTRL + RIGHT 打开 buffer 文件列表上个文件
@@ -47,9 +52,86 @@ nnoremap <C-RIGHT> :bp<CR>
 nnoremap <C-N> :tabn<CR>
 " CTRL + P 打开上一个 tab
 nnoremap <C-P> :tabp<CR>
-"去空行  
-"nnoremap <F2> :g/^\s*$/d<CR> 
-"map <F12> gg=G
+
+"=========================================
+" 语言配置
+"=========================================
+" python tab 长度为 4
+autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+" 开启文件类型检查，这将触发FileType事件，该事件可用于设置语法突出显示，设置选项等
+filetype on
+" 开启文件类型插件，会在'runtimepath'中加载文件“ftplugin.vim”
+filetype plugin on
+" 开启文件类型缩进，会在'runtimepath'中加载文件“indent.vim”
+filetype indent on
+"将输入的TAB自动展开成空格。开启后要输入TAB，需要Ctrl-V<TAB>
+set expandtab
+"使用每层缩进的空格数
+set shiftwidth=4
+"编辑时一个TAB字符占多少个空格的位置
+set tabstop=4
+"方便在开启了et后使用退格（backspace）键，每次退格将删除X个空格
+set softtabstop=4
+"开启时，在行首按TAB将加入 shiftwidth 个空格，否则加入 tabstop 个空格
+set smarttab
+"设置光标超过 78 列的时候折行
+set tw=78
+"不在单词中间断行，如果一行文字非常长，无法在一行内显示完的话，它会在单词与单词间的空白处断开
+"尽量不会把一个单词分成两截放在两个不同的行里
+set lbr
+"打开断行模块对亚洲语言支持
+"m 表示允许在两个汉字之间断行，即使汉字之间没有出现空格
+"B 表示将两行合并为一行的时候，汉字与汉字之间不要补空格
+set fo+=mB
+"显示括号配对情况。打开这个选项后，当输入后括号(包括小括号、中括号、大括号) 的时候，光标会跳回前括号片刻，然后跳回来，以此显示括号的配对情况
+"带有如下符号的单词不要被换行分割
+set iskeyword+=$,@,%,#,-,_
+set sm
+"缩进方式，每一行都和前一行有相同的缩进量，当遇到右花括号（}）等，则取消缩进形式
+"set smartindent
+"缩进方式，用C语言的缩进格式来处理程序的缩进结构
+set cindent
+
+"=========================================
+" 显示配置
+"=========================================
+if has("gui_running")
+    au GUIEnter * simalt ~x " 窗口启动时自动最大化
+    set guioptions-=m " 隐藏菜单栏
+    set guioptions-=T " 隐藏工具栏
+    set guioptions-=L " 隐藏左侧滚动条
+    set guioptions-=r " 隐藏右侧滚动条
+    set guioptions-=b " 隐藏底部滚动条
+    "set showtabline=0 " 隐藏Tab栏
+endif
+"打开 vim 语法高亮
+syntax on
+"在命令模式下使用 Tab 自动补全的时候，将补全内容使用一个漂亮的单行菜单形式显示出来
+set wildmenu
+"指定在选择文本时，光标所在位置也属于被选中的范围。如果指定 selection=exclusive 的话，可能会出现某些文本无法被选中的情况
+set selection=inclusive
+"当右键单击窗口的时候，弹出快捷菜单
+set mousemodel=popup
+"256位色
+set t_Co=256
+"高亮光标所在行
+set cul
+"高亮光标所在列
+set cuc
+"显示行号
+set number
+"历史记录数
+set history=1000
+"在屏幕右下角显示未完成的指令输入，有时候我们输入的命令不是立即生效的，它会稍作等待，等候你是否输入某种组合指令 
+set showcmd
+"光标移动到buffer的顶部和底部时保持3行距离
+set scrolloff=3
+"显示状态栏
+set laststatus=2
+"突出显示当前行
+set cursorline
+"设置魔术
+set magic
 "############################################### end common-conf ###############################
 
 "############################################### begin 所有插件配置 #############################
@@ -166,82 +248,37 @@ let g:SimpylFold_docstring_preview = 1
 
 "############################################### end 所有插件配置 ###############################
 
-filetype plugin indent on    " required
 
-if has("gui_running")
-    au GUIEnter * simalt ~x " 窗口启动时自动最大化
-    set guioptions-=m " 隐藏菜单栏
-    set guioptions-=T " 隐藏工具栏
-    set guioptions-=L " 隐藏左侧滚动条
-    set guioptions-=r " 隐藏右侧滚动条
-    set guioptions-=b " 隐藏底部滚动条
-    "set showtabline=0 " 隐藏Tab栏
-endif
-syntax on
-let mapleader = "\<Space>"
-set sw=4
-set ts=4
-set et
-set smarttab
-set smartindent
-set lbr
-set fo+=mB
-set sm
-set selection=inclusive
-set wildmenu
-set mousemodel=popup
-set t_Co=256 "256位色"
+
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set cul "高亮光标所在行
-set cuc
-color molokai     " 设置背景主题  
+
+
 set guifont=Monaco:h10:b
-set ruler           " 显示标尺  
-set showcmd         " 输入的命令显示出来，看的清楚些  
-set scrolloff=2     " 光标移动到buffer的顶部和底部时保持3行距离  
-set laststatus=2   " 启动显示状态行(1),总是显示状态行(2)  
+
+
 "set foldenable      " 允许折叠  
 "set foldmethod=manual   " 手动折叠  
-set cursorline              " 突出显示当前行
-set magic                   " 设置魔术
-" 自动缩进
-set autoindent
-set cindent
-" Tab键的宽度
-set tabstop=4
-" 统一缩进为4
-set softtabstop=4
-set shiftwidth=4
-" 使用空格代替制表符
-set expandtab
-" 在行和段开始处使用制表符
-set smarttab
-" 显示行号
-set number
-" 历史记录数
-set history=1000
-"搜索逐字符高亮
+
+
+
+"打开搜索高亮模式，若搜索找到匹配项就高亮显示所有匹配项
 set hlsearch
+"打开增量搜索模式，Vim 会即时匹配你当前输入的内容，这样会给你更好的搜索反馈
 set incsearch
 "语言设置
 set langmenu=zh_CN.UTF-8
 set helplang=cn
 " 总是显示状态行
 set cmdheight=1
-" 侦测文件类型
-filetype on
-" 载入文件类型插件
-filetype plugin on
-" 为特定文件类型载入相关缩进文件
-filetype indent on
+
 " 保存全局变量
 set viminfo+=!
-" 带有如下符号的单词不要被换行分割
-set iskeyword+=$,@,%,#,-,_
+
 
 " 字符间插入的像素行数目
 "markdown配置
