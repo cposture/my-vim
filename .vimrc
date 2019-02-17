@@ -31,7 +31,7 @@ Plug '~/vim-plugin/andymass/vim-matchup'
 "python PEP8标准自动缩进，在函数多行定义下有用
 Plug '~/vim-plugin/vim-scripts/indentpython.vim'
 "python 折叠
-Plug '~/vim-plugin/vim-scripts/tmhedberg/SimpylFold'
+Plug '~/vim-plugin/tmhedberg/SimpylFold'
 call plug#end()
 "############################################### end vim-plug ##################################
 
