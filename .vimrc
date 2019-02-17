@@ -26,6 +26,8 @@ Plug '~/vim-plugin/Yggdroot/indentLine'
 Plug '~/vim-plugin/scrooloose/nerdtree'
 "语法检查
 Plug '~/vim-plugin/vim-syntastic/syntastic'
+"配对标签跳转
+Plug '~/vim-plugin/andymass/vim-matchup'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -147,6 +149,11 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+"=========================================
+" vim-matchup 插件配置
+"=========================================
+
 
 "############################################### end 所有插件配置 ###############################
 
