@@ -37,3 +37,9 @@
 [submodule "vim-plugin/andymass/vim-matchup"]
 	path = vim-plugin/andymass/vim-matchup
 	url = https://github.com/andymass/vim-matchup
+[submodule "vim-plugin/vim-scripts/indentpython.vim"]
+	path = vim-plugin/vim-scripts/indentpython.vim
+	url = https://github.com/vim-scripts/indentpython.vim
+[submodule "vim-plugin/tmhedberg/SimpylFold"]
+	path = vim-plugin/tmhedberg/SimpylFold
+	url = https://github.com/tmhedberg/SimpylFold

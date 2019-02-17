@@ -28,6 +28,10 @@ Plug '~/vim-plugin/scrooloose/nerdtree'
 Plug '~/vim-plugin/vim-syntastic/syntastic'
 "配对标签跳转
 Plug '~/vim-plugin/andymass/vim-matchup'
+"python PEP8标准自动缩进，在函数多行定义下有用
+Plug '~/vim-plugin/vim-scripts/indentpython.vim'
+"python 折叠
+Plug '~/vim-plugin/vim-scripts/tmhedberg/SimpylFold'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -154,6 +158,11 @@ let g:syntastic_check_on_wq = 0
 " vim-matchup 插件配置
 "=========================================
 
+"=========================================
+" SimpylFold 插件配置
+"=========================================
+"在折叠文本中预览 python docstring
+let g:SimpylFold_docstring_preview = 1
 
 "############################################### end 所有插件配置 ###############################
 
