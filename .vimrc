@@ -26,11 +26,6 @@ Plug '~/vim-plugin/Yggdroot/indentLine'
 Plug '~/vim-plugin/scrooloose/nerdtree'
 "语法检查
 Plug '~/vim-plugin/vim-syntastic/syntastic'
-"C/C++,js,ts,oc,java,protobuf 格式插件，依赖 vim-operator-user 插件和 clang-format 3.4+
-Plug '~/vim-plugin/rhysd/vim-clang-format'
-"vim-clang-format 依赖
-Plug '~/vim-plugin/kana/vim-operator-user'
-
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -152,16 +147,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
-"=========================================
-" vim-clang-format 插件配置
-"=========================================
-" F4 格式化代码
-nmap <F4> :ClangFormat<CR>
-"自动启用自动格式化
-autocmd FileType c,cpp ClangFormatAutoEnable
-"自动检测样式文件，.clang-format 或者 _clang-format 将样式应用于格式
-let g:clang_format#detect_style_file = 1
 
 "############################################### end 所有插件配置 ###############################
 
