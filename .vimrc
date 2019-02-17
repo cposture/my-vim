@@ -33,6 +33,8 @@ Plug '~/vim-plugin/vim-scripts/indentpython.vim'
 Plug '~/vim-plugin/tmhedberg/SimpylFold'
 " vim 中文版文档
 Plug '~/vim-plugin/yianwillis/vimcdoc'
+"自动补全记忆插件
+Plug '~/vim-plugin/ervandew/supertab'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -265,8 +267,6 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-"把omni补全设置成tab键
-let g:SuperTabDefaultCompletionType="<C-X><C-O>" 
 "############################################### end common-conf ###############################
 
 "############################################### begin 所有插件配置 #############################
@@ -380,3 +380,12 @@ let g:syntastic_check_on_wq = 0
 "=========================================
 "在折叠文本中预览 python docstring
 let g:SimpylFold_docstring_preview = 1
+
+"=========================================
+" supertab 插件配置
+"=========================================
+"记住上次的补全方式，直到按ESC退出插入模式为止;
+let g:SuperTabRetainCompletionType = 2
+"把omni补全设置成tab键
+let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+"############################################### end 所有插件配置 ###############################

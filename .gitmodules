@@ -46,3 +46,6 @@
 [submodule "vim-plugin/yianwillis/vimcdoc"]
 	path = vim-plugin/yianwillis/vimcdoc
 	url = https://github.com/yianwillis/vimcdoc
+[submodule "vim-plugin/ervandew/supertab"]
+	path = vim-plugin/ervandew/supertab
+	url = https://github.com/ervandew/supertab
