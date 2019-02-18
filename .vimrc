@@ -40,6 +40,10 @@ Plug '~/vim-plugin/wsdjeg/FlyGrep.vim'
 call plug#end()
 "############################################### end vim-plug ##################################
 
+
+
+
+
 "############################################### begin common-conf #############################
 "=========================================
 " 键盘配置
@@ -58,6 +62,20 @@ nnoremap <C-N> :tabn<CR>
 nnoremap <C-P> :tabp<CR>
 "tags 跳转，ctrl+左键跳转，且当前行移动到屏幕的顶部
 nnoremap <C-LeftMouse> <C-]>zt<CR>
+"可视模式 Ctrl + C 选择复制到系统剪贴板
+vmap <silent> <C-c> "+y<CR>:wviminfo! ~/.viminfo<CR>
+"可视模式 CTRL + X 剪切到系统剪贴板
+vnoremap <silent> <C-X> "+x<CR>:wviminfo! ~/.viminfo<CR>
+"插入模式 CTRL + V 粘贴到系统剪贴板
+imap <silent> <C-V> :rviminfo! ~/.viminfo<CR>"+p<CR>
+"命令模式 CTRL + V 粘贴到系统剪贴板
+cmap <C-V> <C-R>+<CR>
+"Pasting blockwise and linewise selections is not possible in Insert and
+" Visual mode without the +virtualedit feature.  They are pasted as if they
+" were characterwise instead.
+" Uses the paste.vim autoload script.
+exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
+exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
 
 "=========================================
 " 语言配置
@@ -217,6 +235,11 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 "############################################### end common-conf ###############################
+
+
+
+
+
 
 "############################################### begin 所有插件配置 #############################
 "=========================================
