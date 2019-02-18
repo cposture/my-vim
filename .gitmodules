@@ -49,3 +49,6 @@
 [submodule "vim-plugin/wsdjeg/FlyGrep.vim"]
 	path = vim-plugin/wsdjeg/FlyGrep.vim
 	url = https://github.com/wsdjeg/FlyGrep.vim
+[submodule "vim-plugin/rdnetto/YCM-Generator"]
+	path = vim-plugin/rdnetto/YCM-Generator
+	url = https://github.com/cposture/YCM-Generator
