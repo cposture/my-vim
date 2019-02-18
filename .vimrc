@@ -197,8 +197,6 @@ augroup vimrcEx
                 \ if line("'\"") > 0 && line("'\"") <= line("$") |
                 \   exe "normal g`\"" |
                 \ endif
-    "只剩 NERDTree时自动关闭
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
     " quickfix 模式
     autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
 augroup END
@@ -301,13 +299,17 @@ let g:airline#extensions#tabline#enabled = 1
 let g:indentLine_enabled = 1
 
 "=========================================
-" indentLine 插件配置
+" NERDTree 插件配置
 "=========================================
 "打开树形目录
 map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC> :NERDTreeToggle<CR>
-"只剩 NERDTree 时自动关闭
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+map <F4> :NERDTreeFind<CR>
+imap <F4> <ESC> :NERDTreeFind<CR>
+augroup vimrcEx-NERDTree
+    "只剩 NERDTree 时自动关闭
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+augroup END
 
 "=========================================
 " syntastic 插件配置
