@@ -76,6 +76,8 @@ cmap <C-V> <C-R>+<CR>
 " Uses the paste.vim autoload script.
 exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
 exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
+# 可视模式 CTRL-d vim 和 shell 来回切换
+nnoremap <C-d> :shell<CR>
 
 "=========================================
 " 语言配置
