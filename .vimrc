@@ -37,6 +37,8 @@ Plug '~/vim-plugin/yianwillis/vimcdoc'
 Plug '~/vim-plugin/ervandew/supertab'
 "异步实时代码检索
 Plug '~/vim-plugin/wsdjeg/FlyGrep.vim'
+"nerdtree 辅助插件，展示文件状态
+Plug '~/vim-plugin/Xuyuanp/nerdtree-git-plugin'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -371,4 +373,20 @@ let g:SuperTabDefaultCompletionType="<C-X><C-O>"
 " FlyGrep 插件配置
 "=========================================
 nnoremap <C-F> :FlyGrep<CR>
+
+"=========================================
+" nerdtree-git-plugin 插件配置
+"=========================================
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
 "############################################### end 所有插件配置 ###############################

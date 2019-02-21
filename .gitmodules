@@ -52,3 +52,6 @@
 [submodule "vim-plugin/rdnetto/YCM-Generator"]
 	path = vim-plugin/rdnetto/YCM-Generator
 	url = https://github.com/cposture/YCM-Generator
+[submodule "vim-plugin/Xuyuanp/nerdtree-git-plugin"]
+	path = vim-plugin/Xuyuanp/nerdtree-git-plugin
+	url = https://github.com/Xuyuanp/nerdtree-git-plugin
