@@ -55,3 +55,6 @@
 [submodule "vim-plugin/Xuyuanp/nerdtree-git-plugin"]
 	path = vim-plugin/Xuyuanp/nerdtree-git-plugin
 	url = https://github.com/Xuyuanp/nerdtree-git-plugin
+[submodule "vim-plugin/mhinz/vim-signify"]
+	path = vim-plugin/mhinz/vim-signify
+	url = https://github.com/mhinz/vim-signify

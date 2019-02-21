@@ -39,6 +39,8 @@ Plug '~/vim-plugin/ervandew/supertab'
 Plug '~/vim-plugin/wsdjeg/FlyGrep.vim'
 "nerdtree 辅助插件，展示文件状态
 Plug '~/vim-plugin/Xuyuanp/nerdtree-git-plugin'
+"版本控制系统 vcs 展示每列的增删改状态，支持大部分 vcs
+Plug '~/vim-plugin/mhinz/vim-signify"
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -389,4 +391,33 @@ let g:NERDTreeIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+
+"=========================================
+" vim-signify 插件配置
+"=========================================
+" 设置要检查的VCS
+let g:signify_vcs_list = ['git', 'svn']
+" 插入模式下指定updatetime时间后无操作将缓存区交换文件写入磁盘
+let g:signify_cursorhold_insert     = 1
+" 正常模式下指定updatetime时间后无操作将缓存区交换文件写入磁盘
+let g:signify_cursorhold_normal     = 1
+" 缓冲区被修改时更新符号
+let g:signify_update_on_bufenter    = 0
+" vim获取焦点时更新符号
+let g:signify_update_on_focusgained = 1
+"仅为当前缓冲区打开插件
+nnoremap <leader>gt :SignifyToggle<CR>
+" 键盘映射
+nnoremap <leader>gt :SignifyToggle<CR>
+nnoremap <leader>gh :SignifyToggleHighlight<CR>
+nnoremap <leader>gr :SignifyRefresh<CR>
+nnoremap <leader>gd :SignifyDebug<CR>
+" hunk jumping
+nmap <leader>gj <plug>(signify-next-hunk)
+nmap <leader>gk <plug>(signify-prev-hunk)
+" hunk text object
+omap ic <plug>(signify-motion-inner-pending)
+xmap ic <plug>(signify-motion-inner-visual)
+omap ac <plug>(signify-motion-outer-pending)
+xmap ac <plug>(signify-motion-outer-visual)
 "############################################### end 所有插件配置 ###############################
