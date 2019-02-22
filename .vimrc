@@ -53,7 +53,7 @@ call plug#end()
 " 键盘配置
 "=========================================
 "设置快捷键的前缀
-let mapleader = "<Space>"
+let mapleader = "\<Space>"
 "可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 set mouse=a
 " CTRL + LEFT 打开 buffer 文件列表下个文件
@@ -82,7 +82,23 @@ exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
 exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
 "可视模式 CTRL-d vim 和 shell 来回切换
 nnoremap <C-d> :shell<CR>
+"leader z 最大化或恢复当前窗口
+function! Zoom ()
+    " check if is the zoomed state (tabnumber > 1 && window == 1)
+    if tabpagenr(') > 1 && tabpagewinnr(tabpagenr(), ') == 1
+        let l:cur_winview = winsaveview()
+        let l:cur_bufname = bufname('')
+        tabclose
 
+        " restore the view
+        if l:cur_bufname == bufname('')
+            call winrestview(cur_winview)
+        endif
+    else
+        tab split
+    endif
+endfunction
+nmap <leader>z :call Zoom()<CR>
 "=========================================
 " 语言配置
 "=========================================
