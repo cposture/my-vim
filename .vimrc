@@ -40,7 +40,7 @@ Plug '~/vim-plugin/wsdjeg/FlyGrep.vim'
 "nerdtree 辅助插件，展示文件状态
 Plug '~/vim-plugin/Xuyuanp/nerdtree-git-plugin'
 "版本控制系统 vcs 展示每列的增删改状态，支持大部分 vcs
-Plug '~/vim-plugin/mhinz/vim-signify"
+Plug '~/vim-plugin/mhinz/vim-signify'
 call plug#end()
 "############################################### end vim-plug ##################################
 
