@@ -67,13 +67,13 @@ nnoremap <C-P> :tabp<CR>
 "tags 跳转，ctrl+左键跳转，且当前行移动到屏幕的顶部
 nnoremap <C-LeftMouse> <C-]>zt<CR>
 "可视模式 Ctrl + C 选择复制到系统剪贴板
-vmap <silent> <C-c> "+y<CR>:wviminfo! ~/.viminfo<CR>
+vnoremap <silent> <C-c> "+y<CR>:wviminfo! ~/.viminfo<CR>
 "可视模式 CTRL + X 剪切到系统剪贴板
 vnoremap <silent> <C-X> "+x<CR>:wviminfo! ~/.viminfo<CR>
 "插入模式 CTRL + V 粘贴到系统剪贴板
-imap <silent> <C-V> :rviminfo! ~/.viminfo<CR>"+p<CR>
+inoremap <silent> <C-V> :rviminfo! ~/.viminfo<CR>"+p<CR>
 "命令模式 CTRL + V 粘贴到系统剪贴板
-cmap <C-V> <C-R>+<CR>
+cnoremap <C-V> <C-R>+<CR>
 "Pasting blockwise and linewise selections is not possible in Insert and
 " Visual mode without the +virtualedit feature.  They are pasted as if they
 " were characterwise instead.
@@ -98,7 +98,7 @@ function! Zoom ()
         tab split
     endif
 endfunction
-nmap <leader>z :call Zoom()<CR>
+nnoremap <leader>z :call Zoom()<CR>
 "=========================================
 " 语言配置
 "=========================================
@@ -238,7 +238,7 @@ augroup vimrcEx
                 \   exe "normal g`\"" |
                 \ endif
     " quickfix 模式
-    autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
+    autocmd FileType c,cpp noremap <buffer> <leader><space> :w<cr>:make<cr>
 augroup END
 
 "=========================================
@@ -268,7 +268,7 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 " CurtineIncSw.vim 插件配置
 "=========================================
 "CTRL + R 头文件源文件来回切换
-map <C-R> :call CurtineIncSw()<CR>
+noremap <C-R> :call CurtineIncSw()<CR>
 
 "=========================================
 " YouCompleteMe 插件配置
@@ -301,13 +301,13 @@ inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<ESC>a" : "\<CR>"
 " CurtineIncSw.vim 插件配置
 "=========================================
 " CTRL-R头文件源文件来回切换
-map <C-R> :call CurtineIncSw()<CR>
+noremap <C-R> :call CurtineIncSw()<CR>
 
 "=========================================
 " YCM-Generator 插件配置
 "=========================================
 " ctrl-I 自动生成 .ycm_extra_conf.py 文件
-map <C-I> :YcmGenerateConfig -c g++ -v -x c++ -m /usr/bin/make -f -b make .<CR>
+noremap <C-I> :YcmGenerateConfig -c g++ -v -x c++ -m /usr/bin/make -f -b make .<CR>
 
 "=========================================
 " molokai 插件配置
@@ -319,7 +319,7 @@ color molokai
 " tagbar 插件配置，依赖 ctags
 "=========================================
 " F9 展示类/方法/变量相关侧边栏
-nmap <F9> :TagbarToggle<CR>
+nnoremap <F9> :TagbarToggle<CR>
 "启动时自动focus
 let g:tagbar_autofocus = 1
 
@@ -347,10 +347,10 @@ let g:indentLine_enabled = 1
 " NERDTree 插件配置
 "=========================================
 "打开树形目录
-map <F3> :NERDTreeToggle<CR>
-imap <F3> <ESC> :NERDTreeToggle<CR>
-map <F4> :NERDTreeFind<CR>
-imap <F4> <ESC> :NERDTreeFind<CR>
+noremap <F3> :NERDTreeToggle<CR>
+inoremap <F3> <ESC> :NERDTreeToggle<CR>
+noremap <F4> :NERDTreeFind<CR>
+inoremap <F4> <ESC> :NERDTreeFind<CR>
 augroup vimrcEx-NERDTree
     "只剩 NERDTree 时自动关闭
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -429,11 +429,11 @@ nnoremap <leader>gh :SignifyToggleHighlight<CR>
 nnoremap <leader>gr :SignifyRefresh<CR>
 nnoremap <leader>gd :SignifyDebug<CR>
 " hunk jumping
-nmap <leader>gj <plug>(signify-next-hunk)
-nmap <leader>gk <plug>(signify-prev-hunk)
+nnoremap <leader>gj <plug>(signify-next-hunk)
+nnoremap <leader>gk <plug>(signify-prev-hunk)
 " hunk text object
-omap ic <plug>(signify-motion-inner-pending)
-xmap ic <plug>(signify-motion-inner-visual)
-omap ac <plug>(signify-motion-outer-pending)
-xmap ac <plug>(signify-motion-outer-visual)
+onoremap ic <plug>(signify-motion-inner-pending)
+xnoremap ic <plug>(signify-motion-inner-visual)
+onoremap ac <plug>(signify-motion-outer-pending)
+xnoremap ac <plug>(signify-motion-outer-visual)
 "############################################### end 所有插件配置 ###############################
