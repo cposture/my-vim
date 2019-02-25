@@ -12,7 +12,7 @@ Plug '~/vim-plugin/rdnetto/YCM-Generator'
 "Molokai 主题
 Plug '~/vim-plugin/tomasr/molokai'
 "solarized 主题
-Plug '~/vim-plugin/altercation/vim-colors-solarized'
+"Plug '~/vim-plugin/altercation/vim-colors-solarized'
 "类/方法/变量相关侧边栏，依赖 ctags
 Plug '~/vim-plugin/majutsushi/tagbar'
 "自动补全括号插件
@@ -315,14 +315,14 @@ noremap <C-I> :YcmGenerateConfig -c g++ -v -x c++ -m /usr/bin/make -f -b make .<
 " molokai 插件配置
 "=========================================
 "设置背景主题
-"color molokai
+color molokai
 
 "=========================================
 " vim-colors-solarized 插件配置
 "=========================================
-syntax enable
-set background=dark
-colorscheme solarized
+"syntax enable
+"set background=dark
+"colorscheme solarized
 
 "=========================================
 " tagbar 插件配置，依赖 ctags
