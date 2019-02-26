@@ -1,6 +1,9 @@
 set nocompatible
 "保存全局变量
 set viminfo+=!
+"设置文件格式为unix，这样换行不会带 ^M
+set fileformat=unix
+
 "############################################### begin vim-plug ################################
 call plug#begin()
 "CurtineIncSw.vim 插件，用于头文件源文件来回切换
