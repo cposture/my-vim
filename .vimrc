@@ -451,6 +451,6 @@ xnoremap ac <plug>(signify-motion-outer-visual)
 "=========================================
 " bufferhint 插件配置
 "=========================================
-buffer 排序规则，0: sort by path，1: sort by LRU
+"buffer 排序规则，0: sort by path，1: sort by LRU
 let g:bufferhint_SortMode=0
 "############################################### end 所有插件配置 ###############################
