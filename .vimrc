@@ -43,9 +43,9 @@ Plug '~/vim-plugin/wsdjeg/FlyGrep.vim'
 Plug '~/vim-plugin/Xuyuanp/nerdtree-git-plugin'
 "版本控制系统 vcs 展示每列的增删改状态，支持大部分 vcs
 Plug '~/vim-plugin/mhinz/vim-signify'
-call plug#end()
 "查看和切换缓冲区
 Plug '~/vim-plugin/bsdelf/bufferhint'
+call plug#end()
 "############################################### end vim-plug ##################################
 
 
@@ -453,4 +453,8 @@ xnoremap ac <plug>(signify-motion-outer-visual)
 "=========================================
 "buffer 排序规则，0: sort by path，1: sort by LRU
 let g:bufferhint_SortMode=0
+" - 快捷键打开缓冲区列表，再按一下关闭
+nnoremap - :call bufferhint#Popup()
+" 切回上一个缓冲区
+nnoremap \ :call bufferhint#LoadPrevious()
 "############################################### end 所有插件配置 ###############################
