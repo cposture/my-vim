@@ -61,3 +61,6 @@
 [submodule "vim-plugin/altercation/vim-colors-solarized"]
 	path = vim-plugin/altercation/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
+[submodule "vim-plugin/bsdelf/bufferhint"]
+	path = vim-plugin/bsdelf/bufferhint
+	url = https://github.com/bsdelf/bufferhint

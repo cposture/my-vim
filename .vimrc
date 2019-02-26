@@ -44,6 +44,8 @@ Plug '~/vim-plugin/Xuyuanp/nerdtree-git-plugin'
 "版本控制系统 vcs 展示每列的增删改状态，支持大部分 vcs
 Plug '~/vim-plugin/mhinz/vim-signify'
 call plug#end()
+"查看和切换缓冲区
+Plug '~/vim-plugin/bsdelf/bufferhint'
 "############################################### end vim-plug ##################################
 
 
@@ -445,4 +447,10 @@ onoremap ic <plug>(signify-motion-inner-pending)
 xnoremap ic <plug>(signify-motion-inner-visual)
 onoremap ac <plug>(signify-motion-outer-pending)
 xnoremap ac <plug>(signify-motion-outer-visual)
+
+"=========================================
+" bufferhint 插件配置
+"=========================================
+buffer 排序规则，0: sort by path，1: sort by LRU
+let g:bufferhint_SortMode=0
 "############################################### end 所有插件配置 ###############################
