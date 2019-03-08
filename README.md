@@ -127,6 +127,9 @@ https://blog.csdn.net/softimite_zifeng/article/details/78357898
 * 操作：
 1. visual 模式，选择要复制的内容后执行 `+y`，即可
 
+* 安装 python27-devel，搜索安装包 `yum search python | grep -i devel`，安装 `yum  install python-devel.x86_64`
+* 安装 ncurses-dev 库，搜索安装包 `yum search ncurses | grep -i dev`，安装 `yum install ncurses-devel.x86_64`
+
 * 操作：
 1. 可视模式 Ctrl + C 选择复制到系统剪贴板
 2. 可视模式 CTRL + X 剪切到系统剪贴板
