@@ -460,4 +460,11 @@ let g:bufferhint_SortMode=0
 nnoremap - :call bufferhint#Popup()<CR>
 " 切回上一个缓冲区
 nnoremap \ :call bufferhint#LoadPrevious()<CR>
+
+"=========================================
+" vim-python-pep8-indent 插件配置
+"=========================================
+let g:python_pep8_indent_hang_closing = 1
+let g:python_pep8_indent_multiline_string = -2
+
 "############################################### end 所有插件配置 ###############################

@@ -34,9 +34,6 @@
 [submodule "vim-plugin/andymass/vim-matchup"]
 	path = vim-plugin/andymass/vim-matchup
 	url = https://github.com/andymass/vim-matchup
-[submodule "vim-plugin/vim-scripts/indentpython.vim"]
-	path = vim-plugin/vim-scripts/indentpython.vim
-	url = https://github.com/vim-scripts/indentpython.vim
 [submodule "vim-plugin/tmhedberg/SimpylFold"]
 	path = vim-plugin/tmhedberg/SimpylFold
 	url = https://github.com/tmhedberg/SimpylFold
@@ -64,3 +61,6 @@
 [submodule "vim-plugin/bsdelf/bufferhint"]
 	path = vim-plugin/bsdelf/bufferhint
 	url = https://github.com/bsdelf/bufferhint
+[submodule "vim-plugin/Vimjas/vim-python-pep8-indent"]
+	path = vim-plugin/Vimjas/vim-python-pep8-indent
+	url = https://github.com/Vimjas/vim-python-pep8-indent
