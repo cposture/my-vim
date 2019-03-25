@@ -64,3 +64,6 @@
 [submodule "vim-plugin/Vimjas/vim-python-pep8-indent"]
 	path = vim-plugin/Vimjas/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent
+[submodule "vim-plugin/PangPangPangPangPang/vim-terminal"]
+	path = vim-plugin/PangPangPangPangPang/vim-terminal
+	url = https://github.com/PangPangPangPangPang/vim-terminal
