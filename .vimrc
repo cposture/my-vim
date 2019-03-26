@@ -49,7 +49,7 @@ Plug '~/vim-plugin/mhinz/vim-signify'
 "查看和切换缓冲区
 Plug '~/vim-plugin/bsdelf/bufferhint'
 " syntastic c++ 辅助插件，用于生成配置文件
-Plug '~/vim-plug/cposture/vim-syntastic-generator'
+Plug '~/vim-plugin/cposture/vim-syntastic-generator'
 call plug#end()
 "############################################### end vim-plug ##################################
 
