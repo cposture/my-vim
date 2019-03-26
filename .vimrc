@@ -48,8 +48,8 @@ Plug '~/vim-plugin/Xuyuanp/nerdtree-git-plugin'
 Plug '~/vim-plugin/mhinz/vim-signify'
 "查看和切换缓冲区
 Plug '~/vim-plugin/bsdelf/bufferhint'
-" vim 终端快捷键
-Plug '~/vim-plugin/PangPangPangPangPang/vim-terminal'
+" syntastic c++ 辅助插件，用于生成配置文件
+Plug '~/vim-plug/cposture/vim-syntastic-generator'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -469,15 +469,4 @@ nnoremap \ :call bufferhint#LoadPrevious()<CR>
 let g:python_pep8_indent_hang_closing = 1
 let g:python_pep8_indent_multiline_string = -2
 
-"=========================================
-" vim-terminal 插件配置
-"=========================================
-map <silent> <F12> :VSTerminalToggle<cr>
-if has('nvim')
-    tnoremap <F12> <C-\><C-n> :VSTerminalToggle<cr>
-    tnoremap <C-w> <C-\><C-n><C-w>
-else
-    tmap <silent> <F12> <c-w>:VSTerminalToggle<cr>
-endif
-let g:vs_terminal_custom_height = 10
 "############################################### end 所有插件配置 ###############################
