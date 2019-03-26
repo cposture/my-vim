@@ -135,8 +135,8 @@ set softtabstop=4
 set backspace=indent,eol,start
 "开启时，在行首按TAB将加入 shiftwidth 个空格，否则加入 tabstop 个空格
 set smarttab
-"设置光标超过 78 列的时候折行
-set tw=78
+"设置光标超过 130 列的时候折行
+set tw=130
 "不在单词中间断行，如果一行文字非常长，无法在一行内显示完的话，它会在单词与单词间的空白处断开
 "尽量不会把一个单词分成两截放在两个不同的行里
 set lbr
