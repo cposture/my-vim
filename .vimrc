@@ -50,6 +50,8 @@ Plug '~/vim-plugin/mhinz/vim-signify'
 Plug '~/vim-plugin/bsdelf/bufferhint'
 " syntastic c++ 辅助插件，用于生成配置文件
 Plug '~/vim-plugin/cposture/vim-syntastic-generator'
+" ycm 辅助
+Plug '~/vim-plugin/tenfyzhong/CompleteParameter.vim'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -470,8 +472,12 @@ let g:python_pep8_indent_hang_closing = 1
 let g:python_pep8_indent_multiline_string = -2
 
 "=========================================
-" echodoc 插件配置
+" CompleteParameter 插件配置
 "=========================================
-set cmdheight=2
+inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 
 "############################################### end 所有插件配置 ###############################
