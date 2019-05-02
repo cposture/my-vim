@@ -474,6 +474,8 @@ let g:python_pep8_indent_multiline_string = -2
 "=========================================
 " CompleteParameter 插件配置
 "=========================================
+let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
 inoremap <silent><expr> ( complete_parameter#pre_complete("()")
 smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
 imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
