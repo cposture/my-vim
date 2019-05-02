@@ -316,7 +316,7 @@ noremap <C-R> :call CurtineIncSw()<CR>
 " YCM-Generator 插件配置
 "=========================================
 " ctrl-I 自动生成 .ycm_extra_conf.py 文件
-noremap <C-I> :YcmGenerateConfig -c g++ -v -x c++ -m /usr/bin/make -f -b make .<CR>
+noremap <C-I> :YcmGenerateConfig -c c++ -x c++ -f -b make .<CR>
 
 "=========================================
 " molokai 插件配置
@@ -468,5 +468,10 @@ nnoremap \ :call bufferhint#LoadPrevious()<CR>
 "=========================================
 let g:python_pep8_indent_hang_closing = 1
 let g:python_pep8_indent_multiline_string = -2
+
+"=========================================
+" echodoc 插件配置
+"=========================================
+set cmdheight=2
 
 "############################################### end 所有插件配置 ###############################

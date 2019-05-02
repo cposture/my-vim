@@ -67,3 +67,6 @@
 [submodule "vim-plugin/cposture/vim-syntastic-generator"]
 	path = vim-plugin/cposture/vim-syntastic-generator
 	url = https://github.com/cposture/vim-syntastic-generator
+[submodule "vim-plugin/Shougo/echodoc.vim"]
+	path = vim-plugin/Shougo/echodoc.vim
+	url = https://github.com/Shougo/echodoc.vim
