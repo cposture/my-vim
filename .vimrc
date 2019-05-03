@@ -470,7 +470,6 @@ imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 "=========================================
 " jedi-vim 插件配置
 "=========================================
-let g:jedi#force_py_version=2.7
+let g:jedi#force_py_version=2
 
 "############################################### enc 所有插件配置 ###############################
-sss g:jedi#force_py_version=2.7
