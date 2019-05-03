@@ -22,9 +22,6 @@
 [submodule "vim-plugin/scrooloose/nerdtree"]
 	path = vim-plugin/scrooloose/nerdtree
 	url = https://github.com/scrooloose/nerdtree
-[submodule "vim-plugin/vim-syntastic/syntastic"]
-	path = vim-plugin/vim-syntastic/syntastic
-	url = https://github.com/vim-syntastic/syntastic
 [submodule "vim-plugin/rhysd/vim-clang-format"]
 	path = vim-plugin/rhysd/vim-clang-format
 	url = https://github.com/rhysd/vim-clang-format

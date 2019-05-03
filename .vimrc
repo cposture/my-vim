@@ -28,8 +28,6 @@ Plug '~/vim-plugin/sheerun/vim-polyglot'
 Plug '~/vim-plugin/Yggdroot/indentLine'
 "树形目录插件
 Plug '~/vim-plugin/scrooloose/nerdtree'
-"语法检查
-Plug '~/vim-plugin/vim-syntastic/syntastic'
 "配对标签跳转
 Plug '~/vim-plugin/andymass/vim-matchup'
 "python PEP8标准自动缩进，在函数多行定义下有用
@@ -48,8 +46,6 @@ Plug '~/vim-plugin/Xuyuanp/nerdtree-git-plugin'
 Plug '~/vim-plugin/mhinz/vim-signify'
 "查看和切换缓冲区
 Plug '~/vim-plugin/bsdelf/bufferhint'
-" syntastic c++ 辅助插件，用于生成配置文件
-Plug '~/vim-plugin/cposture/vim-syntastic-generator'
 " ycm 辅助
 Plug '~/vim-plugin/tenfyzhong/CompleteParameter.vim'
 call plug#end()
@@ -373,19 +369,6 @@ augroup vimrcEx-NERDTree
     "只剩 NERDTree 时自动关闭
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 augroup END
-
-"=========================================
-" syntastic 插件配置
-"=========================================
-"检查语法错误
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 "=========================================
 " vim-matchup 插件配置
