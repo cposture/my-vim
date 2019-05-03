@@ -67,3 +67,6 @@
 [submodule "vim-plugin/tenfyzhong/CompleteParameter.vim"]
 	path = vim-plugin/tenfyzhong/CompleteParameter.vim
 	url = https://github.com/tenfyzhong/CompleteParameter.vim
+[submodule "vim-plugin/davidhalter/jedi-vim"]
+	path = vim-plugin/davidhalter/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim

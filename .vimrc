@@ -48,6 +48,8 @@ Plug '~/vim-plugin/mhinz/vim-signify'
 Plug '~/vim-plugin/bsdelf/bufferhint'
 " ycm 辅助
 Plug '~/vim-plugin/tenfyzhong/CompleteParameter.vim'
+" ycm 辅助
+Plug '~/vim-plugin/davidhalter/jedi-vim'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -465,4 +467,10 @@ imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
 smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 
-"############################################### end 所有插件配置 ###############################
+"=========================================
+" jedi-vim 插件配置
+"=========================================
+let g:jedi#force_py_version=2.7
+
+"############################################### enc 所有插件配置 ###############################
+sss g:jedi#force_py_version=2.7
