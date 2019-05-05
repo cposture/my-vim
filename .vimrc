@@ -9,9 +9,9 @@ call plug#begin()
 "CurtineIncSw.vim 插件，用于头文件源文件来回切换
 Plug '~/vim-plugin/ericcurtin/CurtineIncSw.vim'
 "YouCompleteMe 插件，用于补全和提示
-Plug '~/YouCompleteMe'
+Plug '~/YouCompleteMe', {'on': []}
 "YouCompleteMe 辅助插件，生成项目 .ycm_extra_conf.py 文件
-Plug '~/vim-plugin/rdnetto/YCM-Generator', {'on': []}
+Plug '~/vim-plugin/rdnetto/YCM-Generator'
 "Molokai 主题
 Plug '~/vim-plugin/tomasr/molokai'
 "solarized 主题
