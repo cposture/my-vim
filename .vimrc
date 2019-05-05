@@ -11,7 +11,7 @@ Plug '~/vim-plugin/ericcurtin/CurtineIncSw.vim'
 "YouCompleteMe 插件，用于补全和提示
 Plug '~/YouCompleteMe'
 "YouCompleteMe 辅助插件，生成项目 .ycm_extra_conf.py 文件
-Plug '~/vim-plugin/rdnetto/YCM-Generator'
+Plug '~/vim-plugin/rdnetto/YCM-Generator', {'on': []}
 "Molokai 主题
 Plug '~/vim-plugin/tomasr/molokai'
 "solarized 主题
@@ -26,8 +26,8 @@ Plug '~/vim-plugin/vim-airline/vim-airline'
 Plug '~/vim-plugin/sheerun/vim-polyglot'
 "缩进线，方便 python 语言对齐
 Plug '~/vim-plugin/Yggdroot/indentLine'
-"树形目录插件
-Plug '~/vim-plugin/scrooloose/nerdtree'
+"树形目录插件，延迟加载
+Plug '~/vim-plugin/scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 "配对标签跳转
 Plug '~/vim-plugin/andymass/vim-matchup'
 "python PEP8标准自动缩进，在函数多行定义下有用
@@ -284,6 +284,11 @@ noremap <C-R> :call CurtineIncSw()<CR>
 "=========================================
 " YouCompleteMe 插件配置
 "=========================================
+augroup load_ycm
+    autocmd!
+    "延迟加载，在 insert 模式手动加载插件
+    autocmd InsertEnter * call plug#load('YouCompleteMe') | autocmd! load_ycm
+augroup END
 ".ycm_extra_conf.py 文件路径
 let g:ycm_global_ycm_extra_conf = '/data/luffichen/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 "是否开启语义补全
