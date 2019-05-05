@@ -48,8 +48,10 @@ Plug '~/vim-plugin/mhinz/vim-signify'
 Plug '~/vim-plugin/bsdelf/bufferhint'
 " ycm 辅助
 Plug '~/vim-plugin/tenfyzhong/CompleteParameter.vim'
-" ycm 辅助
+" ycm 辅助，用于 python 补全
 Plug '~/vim-plugin/davidhalter/jedi-vim'
+" 语法检查
+Plug '~/vim-plugin/w0rp/ale'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -480,4 +482,38 @@ let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
 
 
+"=========================================
+" ale 插件配置
+"=========================================
+"keep the sign gutter open
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+" show errors or warnings in my statusline
+let g:airline#extensions#ale#enabled = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap sp <Plug>(ale_previous_wrap)
+nmap sn <Plug>(ale_next_wrap)
+""<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
+" only the linters from g:ale_linters and b:ale_linters will be enable
+let g:ale_linters_explicit = 1
+let g:ale_linters = {
+            \   'cpp': ['cppcheck'],
+            \   'c': ['cppcheck'],
+            \   'python': ['pylint'],
+            \}
+" normal 模式下文字改变运行 linter
+let g:ale_lint_on_text_changed = 'normal'
+" 离开 insert 模式的时候运行 linter
+let g:ale_lint_on_insert_leave = 1
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++0x'
+let g:ale_c_cppcheck_options = '--enable=all'
+let g:ale_cpp_cppcheck_options = '--enable=all'
 "############################################### enc 所有插件配置 ###############################
