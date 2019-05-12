@@ -73,3 +73,6 @@
 [submodule "vim-plugin/w0rp/ale"]
 	path = vim-plugin/w0rp/ale
 	url = https://github.com/w0rp/ale
+[submodule "vim-plugin/ludovicchabant/vim-gutentags"]
+	path = vim-plugin/ludovicchabant/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags
