@@ -37,9 +37,6 @@
 [submodule "vim-plugin/yianwillis/vimcdoc"]
 	path = vim-plugin/yianwillis/vimcdoc
 	url = https://github.com/yianwillis/vimcdoc
-[submodule "vim-plugin/ervandew/supertab"]
-	path = vim-plugin/ervandew/supertab
-	url = https://github.com/ervandew/supertab
 [submodule "vim-plugin/wsdjeg/FlyGrep.vim"]
 	path = vim-plugin/wsdjeg/FlyGrep.vim
 	url = https://github.com/wsdjeg/FlyGrep.vim

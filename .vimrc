@@ -36,8 +36,6 @@ Plug '~/vim-plugin/Vimjas/vim-python-pep8-indent'
 Plug '~/vim-plugin/tmhedberg/SimpylFold'
 " vim 中文版文档
 Plug '~/vim-plugin/yianwillis/vimcdoc'
-"自动补全记忆插件
-Plug '~/vim-plugin/ervandew/supertab'
 "异步实时代码检索
 Plug '~/vim-plugin/wsdjeg/FlyGrep.vim'
 "nerdtree 辅助插件，展示文件状态
@@ -390,14 +388,6 @@ augroup END
 "=========================================
 "在折叠文本中预览 python docstring
 let g:SimpylFold_docstring_preview = 1
-
-"=========================================
-" supertab 插件配置
-"=========================================
-"记住上次的补全方式，直到按ESC退出插入模式为止;
-let g:SuperTabRetainCompletionType = 2
-"把omni补全设置成tab键
-let g:SuperTabDefaultCompletionType="<C-X><C-O>"
 
 "=========================================
 " FlyGrep 插件配置
