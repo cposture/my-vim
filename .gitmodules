@@ -73,3 +73,6 @@
 [submodule "vim-plugin/ludovicchabant/vim-gutentags"]
 	path = vim-plugin/ludovicchabant/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags
+[submodule "vim-plugin/fatih/vim-go"]
+	path = vim-plugin/fatih/vim-go
+	url = https://github.com/fatih/vim-go.git
