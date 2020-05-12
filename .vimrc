@@ -71,6 +71,8 @@ call plug#end()
 let mapleader = "\<Space>"
 "可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 set mouse=a
+"mac下支持 yy 等将内容复制到操作系统粘贴版
+set clipboard=unnamed
 " CTRL + LEFT 打开 buffer 文件列表下个文件
 nnoremap <C-LEFT> :bn<CR>
 " CTRL + RIGHT 打开 buffer 文件列表上个文件
