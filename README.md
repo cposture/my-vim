@@ -4,6 +4,32 @@
 2. 复制  .vimrc 到你的 ~
 3. 在 vim 中执行 `:PlugInstall` 安装其他插件 
 
+## golang ide 使用
+| 功能 | 快捷键|
+|:-|:-|
+| run | `:GoRun %`: go run 当前文件<br>`:GoRun`: 执行整个 package<br>`:GoRun` 快捷键: `space-r`|
+| build | `:GoBuild`: go build 当前文件<br>`:GoBuild` 快捷键: `space-b`|
+| build 错误跳转 | `space-]`: 下一个错误<br>`space-[`: 上一个错误<br>`space-[[`: 关闭错误框|
+| Test | `:GoTest`: 执行当前 package 的测试<br>`:GoTestFunc`: 执行当前光标下的测试函数<br>`:GoTestCompile`: 编译测试文件<br>`:GoTest`快捷键: `space-b`| 
+| Coverage | `:GoCoverage`: 执行测试，并且语法高亮测试覆盖率结果<br>`:GoCoverageClear`: 清除语法高亮<br>`:GoCoverageToggle`:`:GoCoverage` 和 `:GoCoverageClear` 的结合<br>`:GoCoverageToggle` 快捷键: `space-c` |
+| Import | `:GoImport strings`: 导入 strings，支持 tab 补全<br>`:GoImportAs str strings`: 导入 strings 包，名字为 str<br>`:GoDrop strings`: 删除 strings 包<br>`:goimports`: 导入缺少的包 |
+| Text objects | `if`: 函数内部代码块<br>`af`: 整个函数代码块<br>可以结合 `d`、`v`、`y` 一起使用, `dif` 用于删除函数内部代码|
+| Struct split and join | `gS`: 把光标放在结构体表达式，自动将一行分解为多行<br>`gJ`: 多行合并为一行|
+| Snippets | `<C-l>`: 在插入模式下输入关键词执行快捷键，实现代码生成<br>示例:<br>`fn -> fmt.Println()`<br>`ff -> fmt.Printf()`<br>`ln -> log.Println()`<br>`lf -> log.Printf()`<br>`ff` 和 `lf` 比较特殊, 会自动根据你后面输入内容补充到 format 里 <br> 更多用法: https://github.com/fatih/vim-go/blob/master/gosnippets/UltiSnips/go.snippets|
+| Check | `:GoLint`: 检查不规范的代码，比如变量名规范，变量声明，大小写问题，大写导出包要有注释等等<br>`:GoVet`: 代码静态检查工具，可以发现编译阶段和运行阶段 bug，比如 `fmt.Printf("%d\n", str)` 类似的 Print-format 错误，Boolean 错误（一直为true、false或者冗余的表达式）、Range 循环（range 块内的 go 协程读变量会产生值不变的问题）、Unreachable的代码等等<br>`:GoErrCheck`: 暂时没有介绍<br>`:GoMetaLinter`: 默认并发执行 `go vet`、`golint`、`errcheck`，`let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']` 设置|
+|Alternate files| `:GoAlternate`: 在文件和测试文件之间快捷跳转|
+| Go to definition  | `:GoDef`: 跳转到定义处<br>`:GoDef` 快捷键: `gd` 或 `C-]`<br>`C-o`: 跳回，如果跳转有有编辑或移动，则跳回到移动前位置<br>`:GoDefPop`: 跳回到上次 `:GoDef` 执行的地方<br>`:GoDefStack`: 展示 `:GoDef` 历史，方便跨级跳回<br>`GoDefStackClear`:清除 `:GoDef` 历史|
+|Move between functions | `:GoDecls`: 在当前文件，列出所有类型和函数，并且支持匹配搜索跳转<br>`:GoDeclsDir`: 功能和 `:GoDecls` 一样，但搜索范围为当前目录<br> `]]`: 跳到下一个函数<br>`[[`: 跳到上一个函数<br>可以结合数字一起使用, `3]]`: 跳到当前文件的第三个函数<br>`d]]`: 删除到下个函数前<br>`v]]`: 可视化到下个函数前, 按 `]]` 继续扩大|
+|Documentation lookup|`:GoDoc`: 展示光标下 identifier 对应文档<br>`:GoDoc` 快捷键: `K`| 
+| Identifier resolution | `:GoInfo`: 查看变量类型,函数签名<br>`:GoInfo` 快捷键: `space-i`|
+|Dependencies and files| `:GoFiles`: 查看当前包的所有源文件，不包括测试文件<br>`:GoDeps`: 展示文件依赖包|
+|Guru| 代码导航工具<br>`使用说明`: https://docs.google.com/document/d/1_Y9xCEMj5S-7rv2ooHpZNH15JgRT5iM742gJkw5LtmQ/edit<br>`:GoReferrers`: 展示引用光标下 identifier 的代码<br>`:GoDescribe`: 高级版的 `:GoInfo`，展示类型的方法集合，结构体的字段集合<br>`:GoImplements`: 查看类型实现了哪些 interface<br>`:GoWhicherrs`: 光标下 error 变量，展示可能出现在 error 类型值的一组常量、全局变量和具体的类型，这些信息可以帮助处理错误，保证所有重要的错误 case 都被处理<br>`:GoChannelPeers`: 跟踪 channel 的发送、接收和定义的地方<br>`:GoCallees`: 光标下函数，展示可能的调用对象，比如光标下的函数是个接口方法，通过命令可以查询它可能会被绑定到哪些实现上<br>`:GoCallers`: 光标下函数，展示函数被哪些方法调用<br>`:GoCallstack`: 显示从调用图的根到包含选择的函数的任意路径。这对于了解如何在给定程序中实现该功能可能很有用|
+| Rename identifiers | `:GoRename`: 更换光标下 identifier 名字，它会搜索 GOPATH 下所有依赖这个 identifier 的 identifiers|
+| Extract function | `:GoFreevars`: 选择模式下，解析选择的代码下包含的使用但未声明的变量，便于重构代码段为函数|
+|Method stubs implementing an interface | `:GoImpl io.ReadWriteCloser`: 光标下的类型 T，自动实现 `io.ReadWriteCloser` 的所有方法<br>`:GoImpl b *B fmt.Stringer`: 方法里的接收者变量名字为 b 类型为 *B，这种不用把光标放在类型上，可以在任意地方执行 |
+|Share it|`:GoPlay`: 把当前文件分享到 https://play.golang.org/，并自动打开浏览器; 支持选择模式下选择特定代码 |
+| Debug | `一般流程`: 启动调试程序，打断点，开始调试，执行下一步，查看信息，结束调试程序<br><br>`:GoDebugStart [pkg] [program-args]`: 启动调试程序，准备前期工作，如果 pkg 为空，则使用当前目录的包<br>`:GoDebugTest [pkg] [program-args]`: 和 `GoDebugStart` 一样，但是执行的是 `dlv test` 命令而不是 `dlv debug`，使用 `-test.flag` 给 `gp test` 传递 flag，比如 `-test.v` 或 `-test.run TestFoo`<br>`:GoDebugBreakpoint [linenr]`: 打断点，快捷键: `F9`<br>`:GoDebugContinue`: 开始/继续调试，快捷键: `F5`<br>`:GoDebugNext`: 相当于 step over，单步执行，在函数内遇到子函数时不会进入子函数内单步执行，而是将子函数整个执行完再停止，快捷键: `F10`<br>`GoDebugStep`: 单步执行，遇到子函数就进入并且继续单步执行，快捷键: `F11`<br>`:GoDebugStepOut`: 当单步执行到子函数内时，用step out就可以执行完子函数余下部分，并返回到上一层函数<br>`:GoDebugPrint {expr}`: 查看表达式结果，快捷键: `F6`<br>`:GoDebugStop`: 退出调试，恢复窗口<br>`:GoDebugRestart`: 停止调试，并且重启 dlv 重新编译包<br>`:GoDebugSet {var} {value}`: 设置变量值，只支持 `float`、`int` 变体、`uint` 变体、`bool`、pointer<br><br>`各个窗口说明`:<br>`GODEBUG_VARIABLES`: 展示所有本地变量，Struct 展示为 `{...}`, array/slices 展示为 `[4]`，使用 `<CR>` 展开值<br>`GODEBUG_OUTPUT`: 展示程序和 `dlv` 的输出<br>`GODEBUG_STACKTRACE`: 展示函数调用栈，方便跳转|
+
 ## 提示补全
 * 插件：YCM +  + omni
 ### YCM-Generator
@@ -135,6 +161,13 @@ https://blog.csdn.net/softimite_zifeng/article/details/78357898
 2. 可视模式 CTRL + X 剪切到系统剪贴板
 3. 插入模式 CTRL + V 粘贴到系统剪贴板
 4. 命令模式 CTRL + V 粘贴到系统剪贴板
+
+## 安装 vim with python2/3
+
+`./configure --prefix=/Users/admin/bin/vim-8.2/ --with-features=huge  --enable-fail-if-missing --enable-python3interp=yes --enable-pythoninterp=yes  --enable-gui=auto --with-python-config-dir=/usr/lib/python2.7/config/ --with-python3-config-dir=/usr/local/Cellar/python@3.8/3.8.2/Frameworks/Python.framework/Versions/3.8/lib/python3.8/config-3.8-darwin --with-python3-command=python3.8`
+
+https://wincent.com/wiki/Building_Vim_from_source
+https://www.yupengsir.com/topic/content?i=276
 
 文档：
 https://stackoverflow.com/questions/28184042/compiling-vim-with-xterm-clipboard-on-centos-6-6

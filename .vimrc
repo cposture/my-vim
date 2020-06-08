@@ -52,10 +52,26 @@ Plug '~/vim-plugin/davidhalter/jedi-vim'
 Plug '~/vim-plugin/w0rp/ale'
 " 自动生成 tags
 Plug '~/vim-plugin/ludovicchabant/vim-gutentags'
-" vim go
+"vim-go
 Plug '~/vim-plugin/fatih/vim-go'
+"vim-go 辅助插件，Struct split and join
+Plug 'AndrewRadev/splitjoin.vim'
+"vim-go 辅助插件，用于片段补全
+Plug 'SirVer/ultisnips'
+"vim-go 辅助插件，用于搜索函数和类型
+Plug 'ctrlpvim/ctrlp.vim'
 " coc-nvim lsp
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"谷歌翻译插件
+Plug 'voldikss/vim-translator'
+"git blame 用于查看指定行的代码是谁编写的
+Plug 'zivyangll/git-blame.vim'
+"plantuml 插件
+Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'tyru/open-browser.vim'
+Plug 'aklt/plantuml-syntax'
+"markdown 插件
+Plug 'iamcco/markdown-preview.vim'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -144,7 +160,7 @@ set backspace=indent,eol,start
 "开启时，在行首按TAB将加入 shiftwidth 个空格，否则加入 tabstop 个空格
 set smarttab
 "设置光标超过 130 列的时候折行
-set tw=130
+"set tw=130
 "不在单词中间断行，如果一行文字非常长，无法在一行内显示完的话，它会在单词与单词间的空白处断开
 "尽量不会把一个单词分成两截放在两个不同的行里
 set lbr
@@ -213,7 +229,7 @@ set cuc
 "显示行号
 set number
 "历史记录数
-set history=1000
+set history=10000
 "在屏幕右下角显示未完成的指令输入，有时候我们输入的命令不是立即生效的，它会稍作等待，等候你是否输入某种组合指令 
 set showcmd
 "光标移动到buffer的顶部和底部时保持3行距离
@@ -540,31 +556,60 @@ if !isdirectory(s:vim_tags)
 endif
 
 "=========================================
+" vim-go 插件配置
+"=========================================
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+map <leader>] :cnext<CR>
+map <leader>[ :cprevious<CR>
+nnoremap <leader>[[ :cclose<CR>
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+"保存文件时自动 import package
+let g:go_fmt_command = "goimports"
+"高亮类型
+"let g:go_highlight_types = 1
+"高亮函数
+"let g:go_highlight_functions = 1
+"高亮操作符
+let g:go_highlight_operators = 1
+"保存时自动执行 'vet', 'golint', 'errcheck'
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_deadline = "10s"
+"自动展示光标下的类型信息
+let g:go_auto_type_info = 1
+"=========================================
 " coc 插件配置
 "=========================================
 " -------------------------------------------------------------------------------------------------
-" TextEdit might fail if hidden is not set.
 let g:coc_node_path = '/usr/local/bin/node'
+"TextEdit sight fail if hidden is not set.
+"在默认设置下，修改文件后打开新文件过程会显示有更改要保存
+"使用:set hidden，当当前缓冲区未保存更改时打开新文件将导致文件被隐藏而不是关闭
+"仍然可以通过键入:ls然后访问未保存的更改，然后输入，缓冲区的编号:b[N]
 set hidden
-
-" Some servers have issues with backup files, see #649.
+"Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
-
-" Give more space for displaying messages.
+"设置命令行的高度
 set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
+"如果过了这么多毫秒数以后还没有任何输入，把交换文件写入磁盘
 set updatetime=300
-
-" Don't pass messages to |ins-completion-menu|.
+"不给出 |ins-completion-menu| 信息。例如，
+"-- XXX completion (YYY)"、"match 1 of 2"、"The only match"、
+"Pattern not found"、"Back at original" 等等。
 set shortmess+=c
-
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
-
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -578,10 +623,8 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-@> coc#refresh()
-
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
 " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
@@ -590,17 +633,14 @@ if exists('*complete_info')
 else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
-
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -614,10 +654,8 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
@@ -634,12 +672,10 @@ augroup end
 " Example: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
-
 " Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
-
 " Introduce function text object
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
 xmap if <Plug>(coc-funcobj-i)
@@ -652,13 +688,10 @@ omap af <Plug>(coc-funcobj-a)
 " coc-tsserver, coc-python are the examples of servers that support it.
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
-
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
-
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
@@ -673,7 +706,7 @@ nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
 nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <space>cm  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
@@ -684,4 +717,31 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+"=========================================
+" vim-translator 插件配置
+"=========================================
+" Echo translation in the cmdline
+nmap <silent> <leader>tc <Plug>Translate
+vmap <silent> <leader>tc <Plug>TranslateV
+" Display translation in a window
+nmap <silent> <leader>tw <Plug>TranslateW
+vmap <silent> <leader>tw <Plug>TranslateWV
+" Replace the text with translation
+nmap <silent> <leader>tr <Plug>TranslateR
+vmap <silent> <Leader>tr <Plug>TranslateRV
+" Translate the text in clipboard
+nmap <silent> <Leader>tx <Plug>TranslateX
+
+"=========================================
+"  git-blame 插件配置
+"=========================================
+"查看git 行代码是谁写的
+nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
+
+"=========================================
+"  ultisnips 插件配置
+"=========================================
+let g:UltiSnipsExpandTrigger="<c-l>"
+
 "############################################### enc 所有插件配置 ###############################
