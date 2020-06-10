@@ -7,53 +7,53 @@ set fileformat=unix
 "############################################### begin vim-plug ################################
 call plug#begin()
 "CurtineIncSw.vim 插件，用于头文件源文件来回切换
-Plug '~/vim-plugin/ericcurtin/CurtineIncSw.vim'
+Plug 'ericcurtin/CurtineIncSw.vim'
 "YouCompleteMe 插件，用于补全和提示
 Plug '~/YouCompleteMe', {'on': []}
 "YouCompleteMe 辅助插件，生成项目 .ycm_extra_conf.py 文件
-Plug '~/vim-plugin/rdnetto/YCM-Generator'
+Plug 'rdnetto/YCM-Generator'
 "Molokai 主题
-Plug '~/vim-plugin/tomasr/molokai'
+Plug 'tomasr/molokai'
 "solarized 主题
 "Plug '~/vim-plugin/altercation/vim-colors-solarized'
 "类/方法/变量相关侧边栏，依赖 ctags
-Plug '~/vim-plugin/majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 "自动补全括号插件
-Plug '~/vim-plugin/jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 "状态栏
-Plug '~/vim-plugin/vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 "开箱即用型的语法高亮包，支持大部分前端后台语言
-Plug '~/vim-plugin/sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 "缩进线，方便 python 语言对齐
-Plug '~/vim-plugin/Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 "树形目录插件，延迟加载
-Plug '~/vim-plugin/scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 "配对标签跳转
-Plug '~/vim-plugin/andymass/vim-matchup'
+Plug 'andymass/vim-matchup'
 "python PEP8标准自动缩进，在函数多行定义下有用
-Plug '~/vim-plugin/Vimjas/vim-python-pep8-indent'
+Plug 'Vimjas/vim-python-pep8-indent'
 "python 折叠
-Plug '~/vim-plugin/tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold'
 " vim 中文版文档
-Plug '~/vim-plugin/yianwillis/vimcdoc'
+Plug 'yianwillis/vimcdoc'
 "异步实时代码检索
-Plug '~/vim-plugin/wsdjeg/FlyGrep.vim'
+Plug 'wsdjeg/FlyGrep.vim'
 "nerdtree 辅助插件，展示文件状态
-Plug '~/vim-plugin/Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 "版本控制系统 vcs 展示每列的增删改状态，支持大部分 vcs
-Plug '~/vim-plugin/mhinz/vim-signify'
+Plug 'mhinz/vim-signify'
 "查看和切换缓冲区
-Plug '~/vim-plugin/bsdelf/bufferhint'
+Plug 'bsdelf/bufferhint'
 " ycm 辅助
-Plug '~/vim-plugin/tenfyzhong/CompleteParameter.vim'
+Plug 'tenfyzhong/CompleteParameter.vim'
 " ycm 辅助，用于 python 补全
-Plug '~/vim-plugin/davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 " 语法检查
-Plug '~/vim-plugin/w0rp/ale'
+Plug 'w0rp/ale'
 " 自动生成 tags
-Plug '~/vim-plugin/ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 "vim-go
-Plug '~/vim-plugin/fatih/vim-go'
+Plug 'fatih/vim-go'
 "vim-go 辅助插件，Struct split and join
 Plug 'AndrewRadev/splitjoin.vim'
 "vim-go 辅助插件，用于片段补全
@@ -72,6 +72,8 @@ Plug 'tyru/open-browser.vim'
 Plug 'aklt/plantuml-syntax'
 "markdown 插件
 Plug 'iamcco/markdown-preview.vim'
+"fzf文件查找
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -586,6 +588,8 @@ let g:go_metalinter_autosave = 1
 let g:go_metalinter_deadline = "10s"
 "自动展示光标下的类型信息
 let g:go_auto_type_info = 1
+"禁用自动跳转到第一个错误的代码，因为保存时检查错误就自动跳，有点烦
+let g:go_jump_to_error = 0
 "=========================================
 " coc 插件配置
 "=========================================
