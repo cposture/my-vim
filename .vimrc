@@ -8,10 +8,6 @@ set fileformat=unix
 call plug#begin()
 "CurtineIncSw.vim 插件，用于头文件源文件来回切换
 Plug 'ericcurtin/CurtineIncSw.vim'
-"YouCompleteMe 插件，用于补全和提示
-Plug '~/YouCompleteMe', {'on': []}
-"YouCompleteMe 辅助插件，生成项目 .ycm_extra_conf.py 文件
-Plug 'rdnetto/YCM-Generator'
 "Molokai 主题
 Plug 'tomasr/molokai'
 "solarized 主题
@@ -36,14 +32,10 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'tmhedberg/SimpylFold'
 " vim 中文版文档
 Plug 'yianwillis/vimcdoc'
-"异步实时代码检索
-Plug 'wsdjeg/FlyGrep.vim'
 "nerdtree 辅助插件，展示文件状态
 Plug 'Xuyuanp/nerdtree-git-plugin'
 "版本控制系统 vcs 展示每列的增删改状态，支持大部分 vcs
 Plug 'mhinz/vim-signify'
-"查看和切换缓冲区
-Plug 'bsdelf/bufferhint'
 " ycm 辅助
 Plug 'tenfyzhong/CompleteParameter.vim'
 " ycm 辅助，用于 python 补全
@@ -72,8 +64,12 @@ Plug 'tyru/open-browser.vim'
 Plug 'aklt/plantuml-syntax'
 "markdown 插件
 Plug 'iamcco/markdown-preview.vim'
-"fzf文件查找
+"fzf文件查找, 帮助安装最新的二进制文件
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-rooter'
+"vim git
+Plug 'tpope/vim-fugitive'
 call plug#end()
 "############################################### end vim-plug ##################################
 
@@ -230,6 +226,8 @@ set cul
 set cuc
 "显示行号
 set number
+"显式相对行号
+set rnu
 "历史记录数
 set history=10000
 "在屏幕右下角显示未完成的指令输入，有时候我们输入的命令不是立即生效的，它会稍作等待，等候你是否输入某种组合指令 
@@ -306,53 +304,17 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 noremap <C-R> :call CurtineIncSw()<CR>
 
 "=========================================
-" YouCompleteMe 插件配置
-"=========================================
-augroup load_ycm
-    autocmd!
-    "延迟加载，在 insert 模式手动加载插件
-    autocmd InsertEnter * call plug#load('YouCompleteMe') | autocmd! load_ycm
-augroup END
-".ycm_extra_conf.py 文件路径
-let g:ycm_global_ycm_extra_conf = '/data/luffichen/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-"是否开启语义补全
-let g:ycm_seed_identifiers_with_syntax=1
-"打开vim时不再询问是否加载.ycm_extra_conf.py配置
-let g:ycm_confirm_extra_conf=0
-"提示框展示
-set completeopt=longest,menu
-"跳转快捷键
-" space + j + c 跳转到声明处
-nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
-"space + j + f 跳转到定义处
-nnoremap <leader>jf :YcmCompleter GoToDefinition<CR>
-"space + j + j 跳转到声明或定义处
-nnoremap <leader>jj :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"YCM将使用此选项的值作为Vim装订线中错误的符号
-let g:ycm_error_symbol = '>>'
-"YCM将使用此选项的值作为Vim装订线中警告的符号
-let g:ycm_warning_symbol = '>*'
-"回车即选中当前项"
-inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
-let g:ycm_autoclose_preview_window_after_completion = 0
-inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<ESC>a" : "\<CR>"
-
-"=========================================
 " CurtineIncSw.vim 插件配置
 "=========================================
 " CTRL-R头文件源文件来回切换
 noremap <C-R> :call CurtineIncSw()<CR>
 
 "=========================================
-" YCM-Generator 插件配置
-"=========================================
-" ctrl-I 自动生成 .ycm_extra_conf.py 文件
-noremap <C-I> :YcmGenerateConfig -c c++ -x c++ -f -b make .<CR>
-
-"=========================================
 " molokai 插件配置
 "=========================================
 "设置背景主题
+let g:rehash256=1
+let g:molokai_original = 1
 color molokai
 
 "=========================================
@@ -414,11 +376,6 @@ augroup END
 let g:SimpylFold_docstring_preview = 1
 
 "=========================================
-" FlyGrep 插件配置
-"=========================================
-nnoremap <C-F> :FlyGrep<CR>
-
-"=========================================
 " nerdtree-git-plugin 插件配置
 "=========================================
 let g:NERDTreeIndicatorMapCustom = {
@@ -462,16 +419,6 @@ onoremap ic <plug>(signify-motion-inner-pending)
 xnoremap ic <plug>(signify-motion-inner-visual)
 onoremap ac <plug>(signify-motion-outer-pending)
 xnoremap ac <plug>(signify-motion-outer-visual)
-
-"=========================================
-" bufferhint 插件配置
-"=========================================
-"buffer 排序规则，0: sort by path，1: sort by LRU
-let g:bufferhint_SortMode=0
-" - 快捷键打开缓冲区列表，再按一下关闭
-nnoremap - :call bufferhint#Popup()<CR>
-" 切回上一个缓冲区
-nnoremap \ :call bufferhint#LoadPrevious()<CR>
 
 "=========================================
 " vim-python-pep8-indent 插件配置
@@ -590,6 +537,7 @@ let g:go_metalinter_deadline = "10s"
 let g:go_auto_type_info = 1
 "禁用自动跳转到第一个错误的代码，因为保存时检查错误就自动跳，有点烦
 let g:go_jump_to_error = 0
+let g:go_metalinter_command = "golangci-lint run --new  --timeout=1m --issues-exit-code=-1 --disable-all -E=gosimple -E=unused -E=errcheck -E=staticcheck -E=ineffassign -E=govet -E=varcheck -E=structcheck -E=gocritic -E=dogsled -E=dupl -E=gosec -E=whitespace -E=funlen -E=unparam -E=golint -E=goimports -E=gofmt -E=lll -E=unconvert -E=misspell -E=scopelint -E=gocyclo -E=goconst -E=gochecknoinits -E=deadcode -E=stylecheck"
 "=========================================
 " coc 插件配置
 "=========================================
@@ -748,4 +696,17 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 "=========================================
 let g:UltiSnipsExpandTrigger="<c-l>"
 
+"=========================================
+"  fzf 插件配置
+"=========================================
+"搜索文件名
+nnoremap <C-f> :Files!<Cr>
+"搜索结果
+map <C-g> <Esc><Esc>:Rg!<space>
+"搜索当前buffer的行
+inoremap <C-g> <Esc><Esc>:BLines!<CR>
+"展示当前buffer的提交
+map <C-c> <Esc><Esc>:BCommits!<CR>
+"- 快捷键打开缓冲区列表
+nnoremap - :Buffers<CR>
 "############################################### enc 所有插件配置 ###############################
